@@ -1274,6 +1274,13 @@ ol {
   transform: translateX(-50%) translateY(0);
 }
 
+.cta-items {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
 @media (max-width: 600px) {
   .header {
     padding: 20px 18px 24px;
