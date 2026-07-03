@@ -788,8 +788,8 @@ select {
   letter-spacing: 0.08em;
 }
 .result-doc h1 {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 3px;
 }
@@ -809,12 +809,12 @@ select {
   border-bottom: 2px solid var(--border);
 }
 .result-doc h2 {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: none;
   letter-spacing: 0;
   color: var(--doc-primary, var(--blue));
-  margin: 18px 0 7px;
+  margin: 20px 0 7px;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -825,6 +825,7 @@ select {
   height: 1px;
   background: var(--border);
   margin-left: 8px;
+  opacity: 0.5;
 }
 .result-doc h3 {
   font-size: 13px;
@@ -833,17 +834,20 @@ select {
   margin: 14px 0 7px;
 }
 .result-doc p {
-  line-height: 1.75;
-  margin-bottom: 10px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  font-size: 13px;
 }
 .result-doc ul,
 ol {
-  padding-left: 18px;
-  margin-bottom: 12px;
+  padding-left: 17px;
+  margin-bottom: 7px;
+  margin-top: 2px;
 }
 .result-doc li {
-  line-height: 1.7;
+  line-height: 1.55;
   margin-bottom: 3px;
+  font-size: 13px;
 }
 .result-doc strong {
   color: var(--text);
@@ -858,15 +862,17 @@ ol {
 .result-doc th {
   background: var(--blue-light);
   color: var(--blue-mid);
-  font-weight: 700;
+  font-weight: 600;
   text-align: left;
-  padding: 8px 10px;
+  padding: 5px 10px;
   border: 1px solid var(--border);
+  font-size: 12px;
 }
 .result-doc td {
-  padding: 7px 10px;
+  padding: 5px 10px;
   border: 1px solid var(--border);
   vertical-align: top;
+  font-size: 12.5px;
 }
 .result-doc tr:nth-child(even) td {
   background: var(--bg);
@@ -1008,6 +1014,8 @@ ol {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+.doc-rodape-col {
+}
 .doc-rodape-col-label {
   font-size: 8.5px;
   font-weight: 800;
@@ -1054,8 +1062,8 @@ ol {
 }
 /* Título principal — Proposta de serviços */
 .doc-titulo-proposta {
-  font-size: 26px;
-  font-weight: 900;
+  font-size: 22px;
+  font-weight: 800;
   color: var(--doc-secondary, var(--text));
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -1063,11 +1071,11 @@ ol {
   text-align: center;
 }
 .doc-subtitulo-tipo {
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--muted);
-  margin-bottom: 24px;
-  padding-bottom: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
   border-bottom: 2px solid var(--border);
   text-align: center;
 }
@@ -1286,6 +1294,10 @@ ol {
   .prazo-num {
     width: 70px !important;
   }
+  .cta-items {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 @media print {
   @page {
@@ -1345,8 +1357,8 @@ ol {
   }
   /* H1 comum */
   .result-doc h1 {
-    font-size: 16pt !important;
-    margin-bottom: 6pt;
+    font-size: 12pt !important;
+    margin-bottom: 4pt;
   }
   /* Título principal da proposta (caixa alta) — fonte maior */
   .result-doc h1.doc-titulo {
@@ -1375,6 +1387,38 @@ ol {
     border-left: 2pt solid #1560f5 !important;
     padding: 8pt 12pt !important;
   }
+  /* Bloco de investimento — visual destacado */
+  .doc-investimento {
+    background: var(--blue-pale);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin: 12px 0;
+  }
+  .doc-investimento-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .doc-investimento-row:last-child {
+    margin-bottom: 0;
+  }
+  .doc-inv-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+  .doc-inv-value {
+    font-size: 13.5px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.5;
+  }
   /* Rodapé timbrado — visível no PDF */
   .rodape-doc {
     display: block !important;
@@ -1388,15 +1432,17 @@ ol {
   }
   /* Títulos de seção menores no PDF */
   .result-doc h2 {
-    font-size: 9pt !important;
+    font-size: 10pt !important;
     font-weight: 700 !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
+    margin: 12pt 0 4pt !important;
   }
   /* Título proposta maior no PDF */
   .doc-titulo-proposta {
-    font-size: 26pt !important;
+    font-size: 18pt !important;
     margin-bottom: 4pt;
+    text-align: center;
   }
   .doc-subtitulo-tipo {
     font-size: 12pt !important;

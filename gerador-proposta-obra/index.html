@@ -1,14 +1,30 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-M889JKLK");
+    </script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerador de proposta de obra — OrçaFascio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M889JKLK" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!-- HEADER -->
     <div class="header">
       <!-- Logo real via URL com filter branco -->
@@ -551,14 +567,29 @@
               Claude
             </button>
             <button class="ai-sel-btn" id="ai-btn-gemini" onclick="selAI('gemini', this)" style="color: #1c7deb">
-              <svg width="15" height="15" viewBox="0 0 28 28" fill="none">
+              <svg width="17" height="17" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <linearGradient id="gg2" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stop-color="#1BA1E3" />
-                    <stop offset="100%" stop-color="#9B72CB" />
-                  </linearGradient>
+                  <radialGradient id="gem-a" cx="0%" cy="100%" r="100%">
+                    <stop offset="0%" stop-color="#1AA260" />
+                    <stop offset="100%" stop-color="#46D4A0" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="gem-b" cx="100%" cy="100%" r="141%">
+                    <stop offset="0%" stop-color="#E6812C" />
+                    <stop offset="100%" stop-color="#E6812C" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="gem-c" cx="100%" cy="0%" r="100%">
+                    <stop offset="0%" stop-color="#D94035" />
+                    <stop offset="100%" stop-color="#D94035" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="gem-d" cx="0%" cy="0%" r="141%">
+                    <stop offset="0%" stop-color="#1B6FE4" />
+                    <stop offset="100%" stop-color="#1B6FE4" stop-opacity="0" />
+                  </radialGradient>
                 </defs>
-                <path d="M14 0.5C14 0.5 14 10 9 14C4 18 0.5 14 0.5 14C0.5 14 10 14 14 19C18 24 14 27.5 14 27.5C14 27.5 14 18 19 14C24 10 27.5 14 27.5 14C27.5 14 18 14 14 9C10 4 14 0.5 14 0.5Z" fill="url(#gg2)" />
+                <path d="M14 0.5C14 0.5 13.2 10.5 8.5 14C3.8 17.5 0.5 14 0.5 14C0.5 14 10.5 14.8 14 19.5C17.5 24.2 14 27.5 14 27.5C14 27.5 14.8 17.5 19.5 14C24.2 10.5 27.5 14 27.5 14C27.5 14 17.5 13.2 14 8.5C10.5 3.8 14 0.5 14 0.5Z" fill="url(#gem-a)" />
+                <path d="M14 0.5C14 0.5 13.2 10.5 8.5 14C3.8 17.5 0.5 14 0.5 14C0.5 14 10.5 14.8 14 19.5C17.5 24.2 14 27.5 14 27.5C14 27.5 14.8 17.5 19.5 14C24.2 10.5 27.5 14 27.5 14C27.5 14 17.5 13.2 14 8.5C10.5 3.8 14 0.5 14 0.5Z" fill="url(#gem-b)" />
+                <path d="M14 0.5C14 0.5 13.2 10.5 8.5 14C3.8 17.5 0.5 14 0.5 14C0.5 14 10.5 14.8 14 19.5C17.5 24.2 14 27.5 14 27.5C14 27.5 14.8 17.5 19.5 14C24.2 10.5 27.5 14 27.5 14C27.5 14 17.5 13.2 14 8.5C10.5 3.8 14 0.5 14 0.5Z" fill="url(#gem-c)" />
+                <path d="M14 0.5C14 0.5 13.2 10.5 8.5 14C3.8 17.5 0.5 14 0.5 14C0.5 14 10.5 14.8 14 19.5C17.5 24.2 14 27.5 14 27.5C14 27.5 14.8 17.5 19.5 14C24.2 10.5 27.5 14 27.5 14C27.5 14 17.5 13.2 14 8.5C10.5 3.8 14 0.5 14 0.5Z" fill="url(#gem-d)" />
               </svg>
               Gemini
             </button>
@@ -570,7 +601,7 @@
           <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px">2. Como funciona</div>
           <div class="pstep" style="margin-bottom: 8px">
             <div class="pstep-num">1</div>
-            <div class="pstep-text">Clique em <strong>"Copiar prompt e abrir IA"</strong> abaixo. Para <strong>ChatGPT</strong> e <strong>Gemini</strong>, o prompt é enviado direto e o chat já abre preenchido. Para o <strong>Claude</strong>, o chat abre em branco — cole com <strong>Ctrl+V</strong>.</div>
+            <div class="pstep-text">Selecione a IA e clique em <strong>"Copiar prompt e abrir IA"</strong>. O prompt é copiado automaticamente e a IA abre em nova aba. Cole com <strong>Ctrl+V</strong> e pressione Enter.</div>
           </div>
           <div class="pstep" style="margin-bottom: 8px">
             <div class="pstep-num">2</div>
@@ -723,15 +754,15 @@
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
               <polyline points="14 2 14 8 20 8" />
             </svg>
-            Word (.doc)
+            Word (.docx)
           </button>
-          <button class="btn-dl" id="btn-dl-pptx" onclick="baixarPptx()">
+          <button class="btn-dl" id="btn-dl-pptx" onclick="baixarPptx()" title="Gera HTML com layout de slides — abra no browser e imprima como PDF, ou importe no Google Slides">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
               <line x1="8" y1="21" x2="16" y2="21" />
               <line x1="12" y1="17" x2="12" y2="21" />
             </svg>
-            PowerPoint (.pptx)
+            Apresentação (.html)
           </button>
           <span style="color: rgba(255, 255, 255, 0.45); font-size: 11px; margin-left: auto">Para PDF: use "Imprimir → Salvar como PDF" no browser</span>
         </div>
@@ -741,9 +772,9 @@
             <h3>Quer ir além da proposta? Então conheça a OrçaFascio!</h3>
             <p>Líder em gestão de obras no Brasil, a OrçaFascio tem ferramentas para orçamento, medição, planejamento, BIM e várias outras. Teste grátis durante 7 dias (sem cartão!).</p>
           </div>
-          <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0; flex-wrap: wrap">
+          <div style="display: flex; align-items: center; gap: 14px; flex-shrink: 0; flex-wrap: wrap" class="cta-items">
             <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio" style="height: 22px; opacity: 0.65; filter: brightness(0) invert(1); flex-shrink: 0" onerror="this.style.display = 'none'" />
-            <a href="https://app.orcafascio.com/usuarios/new/?_gl=1*1lrxv8f*_gcl_aw*R0NMLjE3NzgxNzgzMTIuQ2owS0NRanc4UERQQmhDZUFSSXNBT0p3bVdWaVNhSWNBMGd1V3REWE9Odjk2Q0ZxV051RjJDQVowN3lzeHJFZ2UtSW9BY19hZU82UEZFRWFBa3FNRUFMd193Y0I.*_gcl_au*MTA1ODg4ODExNS4xNzgwOTE1NTgx" target="_blank" class="btn btn-white">Quero experimentar!</a>
+            <a href="https://app.orcafascio.com/usuarios/new?utm_source=ia_tool&utm_medium=banner_interno&utm_campaign=gerador_proposta_obra_ia" target="_blank" class="btn btn-white">Quero experimentar!</a>
           </div>
         </div>
         <div style="text-align: center; margin-top: 14px">
@@ -761,5 +792,7 @@
     <!-- /container -->
 
     <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
   </body>
 </html>
