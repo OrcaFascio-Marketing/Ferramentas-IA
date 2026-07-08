@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de contrato de obra — OrçaFascio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img class="header-logo"
+       src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg"
+       alt="OrçaFascio"
+       onerror="this.outerHTML='<div style=\'display:flex;align-items:center;gap:10px;position:relative;z-index:1\'><svg width=\'44\' height=\'44\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><polyline points=\'16,11 7,24 16,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><polyline points=\'32,11 41,24 32,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><rect x=\'19.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'24\' y=\'11\' width=\'3\' height=\'21\' fill=\'white\'/><rect x=\'28.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'19.5\' y=\'32\' width=\'12\' height=\'2.8\' fill=\'white\'/></svg><span style=\'font-size:22px;font-weight:800;color:#fff;letter-spacing:.1em;text-transform:uppercase\'>OrçaFascio</span></div>'">
+  <div class="header-title">Gerador de contrato de obra</div>
+  <div class="header-sub">Preencha os dados, monte o prompt e gere o contrato com IAs gratuitas.</div>
+</div>
+
+<div class="container">
+
+  <!-- BARRA IMPORTAR -->
+  <div class="save-bar" id="save-bar">
+    <label class="btn-save btn-save-primary" style="cursor:pointer">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Importar contrato
+      <input type="file" accept=".html" style="display:none" onchange="importarHTML(this)">
+    </label>
+    <span style="font-size:11px;color:var(--muted-light);margin-left:6px">Apenas contratos gerados anteriormente nesta ferramenta, em formato <strong>.html</strong></span>
+  </div>
+
+  <!-- AVISO LEGAL -->
+  <div class="aviso-legal">
+    <div class="aviso-legal-icon">⚖️</div>
+    <div class="aviso-legal-text"><strong>Aviso legal:</strong> Este contrato é gerado por inteligência artificial e tem caráter de modelo de referência. Antes de assinar, recomendamos a revisão por um advogado especializado em direito da construção civil.</div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps" id="steps-bar">
+    <div class="step active" id="step-1"><div class="step-num">1</div><div class="step-label">Partes</div></div>
+    <div class="step" id="step-2"><div class="step-num">2</div><div class="step-label">Objeto</div></div>
+    <div class="step" id="step-3"><div class="step-num">3</div><div class="step-label">Financeiro</div></div>
+    <div class="step" id="step-4"><div class="step-num">4</div><div class="step-label">Cláusulas</div></div>
+    <div class="step" id="step-5"><div class="step-num">5</div><div class="step-label">Prompt</div></div>
+    <div class="step" id="step-6"><div class="step-num">6</div><div class="step-label">Contrato final</div></div>
+  </div>
+
+  <!-- ═══════════════ FORMULÁRIO ═══ -->
+  <div id="section-form">
+
+    <!-- ETAPA 1 — PARTES -->
+    <div id="page-1">
+
+      <!-- LOGOS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <div><div class="card-title">Logos do contrato</div><div class="card-desc">Aparecem no cabeçalho do documento gerado</div></div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label class="field-label">Logo do Contratado</label>
+            <div class="logo-upload" id="la-contratado">
+              <input type="file" accept="image/*" id="li-contratado" onchange="handleLogo('contratado',this)">
+              <div id="lp-contratado"><div style="font-size:24px;margin-bottom:5px">🏢</div><div class="logo-upload-label"><strong>Clique para subir</strong></div><div class="logo-upload-hint">PNG, JPG ou SVG · até 2 MB</div></div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Logo do Contratante</label>
+            <div class="logo-upload" id="la-contratante">
+              <input type="file" accept="image/*" id="li-contratante" onchange="handleLogo('contratante',this)">
+              <div id="lp-contratante"><div style="font-size:24px;margin-bottom:5px">🏗️</div><div class="logo-upload-label"><strong>Clique para subir</strong></div><div class="logo-upload-hint">PNG, JPG ou SVG · até 2 MB</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IDENTIDADE VISUAL -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg></div>
+          <div><div class="card-title">Identidade visual</div><div class="card-desc">Cores aplicadas nos títulos e cabeçalho do documento</div></div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label class="field-label">Cor primária</label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="color" id="cor-primaria" value="#1560F5" style="width:44px;height:38px;padding:2px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;background:#fff">
+              <input type="text" id="cor-primaria-hex" value="#1560F5" placeholder="#1560F5" style="width:100px" oninput="syncCor('primaria')">
+              <span style="font-size:11px;color:var(--muted)">Títulos e destaques</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Cor secundária</label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="color" id="cor-secundaria" value="#0A1A5C" style="width:44px;height:38px;padding:2px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;background:#fff">
+              <input type="text" id="cor-secundaria-hex" value="#0A1A5C" placeholder="#0A1A5C" style="width:100px" oninput="syncCor('secundaria')">
+              <span style="font-size:11px;color:var(--muted)">Cabeçalho e rodapé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTRATADO + CONTRATANTE + TESTEMUNHAS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div><div class="card-title">Partes contratantes</div><div class="card-desc">Identificação completa — aparece no preâmbulo e nas assinaturas</div></div>
+        </div>
+        <div class="form-grid">
+
+          <!-- CONTRATADO -->
+          <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Contratado — quem presta o serviço</div>
+            <div class="form-grid">
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Razão social ou nome <span>*</span></label>
+                  <input type="text" id="nome-contratado" placeholder="Ex: Construtora ABC Ltda.">
+                </div>
+                <div class="field">
+                  <label class="field-label">CNPJ ou CPF <span>*</span></label>
+                  <input type="text" id="cnpj-contratado" placeholder="00.000.000/0001-00 ou 000.000.000-00" maxlength="18" oninput="mascaraCNPJ(this)">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Endereço completo</label>
+                  <input type="text" id="end-contratado" placeholder="Ex: Rua das Obras, 123 — Centro">
+                </div>
+                <div class="field">
+                  <label class="field-label">Cidade / UF</label>
+                  <input type="text" id="cidade-contratado" placeholder="Ex: Belo Horizonte/MG">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Representante legal</label>
+                  <input type="text" id="rep-contratado" placeholder="Ex: João Silva">
+                </div>
+                <div class="field">
+                  <label class="field-label">E-mail</label>
+                  <input type="text" id="email-contratado" placeholder="Ex: contato@construtora.com.br">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">CPF do representante</label>
+                  <input type="text" id="rep-cpf-contratado" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
+                </div>
+                <div class="field">
+                  <label class="field-label">RG do representante</label>
+                  <input type="text" id="rep-rg-contratado" placeholder="Ex: 12.345.678-9">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Cargo do representante</label>
+                  <input type="text" id="rep-cargo-contratado" placeholder="Ex: Diretor, Sócio-administrador">
+                </div>
+                <div class="field" style="align-self:flex-end">
+                  <!-- espaço intencional -->
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Campos adicionais do Contratado</label>
+                <div class="elist-items" id="extra-contratado-items"></div>
+                <div class="elist-add-row">
+                  <input type="text" id="extra-contratado-input" placeholder="Ex: CREA 12345/MG, Inscrição Municipal…">
+                  <button class="elist-add-btn" onclick="ea('extra-contratado')">＋</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONTRATANTE -->
+          <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-bottom:12px">Contratante — quem contrata o serviço</div>
+            <div class="form-grid">
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Razão social ou nome <span>*</span></label>
+                  <input type="text" id="nome-contratante" placeholder="Ex: João Carlos Pereira">
+                </div>
+                <div class="field">
+                  <label class="field-label">CNPJ ou CPF <span>*</span></label>
+                  <input type="text" id="cnpj-contratante" placeholder="00.000.000/0001-00 ou 000.000.000-00" maxlength="18" oninput="mascaraCNPJ(this)">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Endereço completo</label>
+                  <input type="text" id="end-contratante" placeholder="Ex: Av. Paulista, 1000 — Bela Vista">
+                </div>
+                <div class="field">
+                  <label class="field-label">Cidade / UF</label>
+                  <input type="text" id="cidade-contratante" placeholder="Ex: São Paulo/SP">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Representante legal</label>
+                  <input type="text" id="rep-contratante" placeholder="Ex: Maria Souza">
+                </div>
+                <div class="field">
+                  <label class="field-label">E-mail</label>
+                  <input type="text" id="email-contratante" placeholder="Ex: contato@empresa.com.br">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">CPF do representante</label>
+                  <input type="text" id="rep-cpf-contratante" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
+                </div>
+                <div class="field">
+                  <label class="field-label">RG do representante</label>
+                  <input type="text" id="rep-rg-contratante" placeholder="Ex: 12.345.678-9">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Cargo do representante</label>
+                  <input type="text" id="rep-cargo-contratante" placeholder="Ex: Diretor, Proprietário">
+                </div>
+                <div class="field" style="align-self:flex-end">
+                  <!-- espaço intencional -->
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Campos adicionais do Contratante</label>
+                <div class="elist-items" id="extra-contratante-items"></div>
+                <div class="elist-add-row">
+                  <input type="text" id="extra-contratante-input" placeholder="Ex: Inscrição estadual, Número de processo…">
+                  <button class="elist-add-btn" onclick="ea('extra-contratante')">＋</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TESTEMUNHAS -->
+          <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-bottom:12px">Testemunhas <span style="font-size:9px;font-weight:600;color:var(--muted-light);text-transform:none;letter-spacing:0">(opcional)</span></div>
+            <div class="form-grid">
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Nome — Testemunha 1</label>
+                  <input type="text" id="test1-nome" placeholder="Ex: Carlos Mendes">
+                </div>
+                <div class="field">
+                  <label class="field-label">E-mail — Testemunha 1</label>
+                  <input type="text" id="test1-email" placeholder="Ex: carlos@email.com">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label class="field-label">Nome — Testemunha 2</label>
+                  <input type="text" id="test2-nome" placeholder="Ex: Ana Paula Costa">
+                </div>
+                <div class="field">
+                  <label class="field-label">E-mail — Testemunha 2</label>
+                  <input type="text" id="test2-email" placeholder="Ex: ana@email.com">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FORO E DATA -->
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Foro</label>
+              <input type="text" id="foro" placeholder="Ex: Comarca de Belo Horizonte/MG">
+            </div>
+            <div class="field">
+              <label class="field-label">Data de assinatura <span>*</span></label>
+              <input type="date" id="data-contrato">
+            </div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-primary" onclick="goPage(2)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div><!-- /page-1 -->
+
+    <!-- ETAPA 2 — OBJETO -->
+    <div id="page-2" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div><div class="card-title">Objeto do contrato</div><div class="card-desc">Obra, tipo, regime e características gerais</div></div>
+        </div>
+        <div class="form-grid">
+
+          <div class="field">
+            <label class="field-label">Tipo de obra <span>*</span></label>
+            <div class="field-hint">Sugestões rápidas ou adicione um tipo personalizado.</div>
+            <div class="elist-items" id="tipo-obra-items"></div>
+            <div class="elist-add-row"><input type="text" id="tipo-obra-input" placeholder="Ex: Residencial unifamiliar…"><button class="elist-add-btn" onclick="ea('tipo-obra')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('tipo-obra','Residencial unifamiliar (casa)')">Casa</span>
+              <span class="chip" onclick="es('tipo-obra','Residencial multifamiliar (edifício / condomínio)')">Edifício</span>
+              <span class="chip" onclick="es('tipo-obra','Comercial (loja, escritório, galpão)')">Comercial</span>
+              <span class="chip" onclick="es('tipo-obra','Industrial (fábrica, armazém)')">Industrial</span>
+              <span class="chip" onclick="es('tipo-obra','Institucional (escola, hospital, UBS)')">Institucional</span>
+              <span class="chip" onclick="es('tipo-obra','Reforma parcial')">Reforma parcial</span>
+              <span class="chip" onclick="es('tipo-obra','Reforma completa / retrofit')">Retrofit</span>
+              <span class="chip" onclick="es('tipo-obra','Ampliação de edificação existente')">Ampliação</span>
+              <span class="chip" onclick="es('tipo-obra','Pavimentação e drenagem urbana')">Pavimentação</span>
+              <span class="chip" onclick="es('tipo-obra','Saneamento (rede de água e esgoto)')">Saneamento</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Regime de execução <span>*</span></label>
+            <div class="elist-items" id="regime-items"></div>
+            <div class="elist-add-row"><input type="text" id="regime-input" placeholder="Ex: Empreitada global…"><button class="elist-add-btn" onclick="ea('regime')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('regime','Empreitada global (material + mão de obra)')">Empreitada global</span>
+              <span class="chip" onclick="es('regime','Empreitada por preço unitário')">Preço unitário</span>
+              <span class="chip" onclick="es('regime','Mão de obra (material por conta do Contratante)')">Só mão de obra</span>
+              <span class="chip" onclick="es('regime','Administração direta (custo + taxa de administração)')">Adm. direta</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field"><label class="field-label">Local da obra <span>*</span></label><input type="text" id="local-obra" placeholder="Ex: Rua das Flores, 45 — Belo Horizonte/MG"></div>
+            <div class="field"><label class="field-label">Área total (m²)</label><input type="text" id="area-obra" placeholder="Ex: 250 m²"></div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Descrição detalhada do objeto <span>*</span></label>
+            <div class="field-hint">Descreva o que será executado. Quanto mais detalhado, melhor o contrato gerado.</div>
+            <textarea id="objeto" rows="3" placeholder="Ex: Construção de sobrado com 180 m², 3 dormitórios, 2 suítes e 2 vagas de garagem, conforme projeto arquitetônico aprovado sob número 2024/1234 pela Prefeitura Municipal de…"></textarea>
+          </div>
+
+          <!-- SERVIÇOS INCLUÍDOS -->
+          <div class="field">
+            <label class="field-label">Serviços incluídos no contrato</label>
+            <div class="field-hint">Marque os itens ou adicione outros personalizados.</div>
+            <div class="check-grid" id="servicos-grid" style="margin-top:8px"></div>
+            <div style="margin-top:12px">
+              <div class="elist-items" id="servicos-custom-items"></div>
+              <div class="elist-add-row"><input type="text" id="servicos-custom-input" placeholder="Ex: Impermeabilização de reservatório…"><button class="elist-add-btn" onclick="ea('servicos-custom')">＋</button></div>
+            </div>
+          </div>
+
+          <!-- PRAZO -->
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Prazo total de execução <span>*</span></label>
+              <div class="prazo-row">
+                <input type="number" id="prazo-num" class="prazo-num" min="1" placeholder="Ex: 6">
+                <select id="prazo-unidade" class="prazo-sel" onchange="togglePrazoOutro()">
+                  <option value="horas">Horas</option>
+                  <option value="dias corridos">Dias corridos</option>
+                  <option value="dias úteis">Dias úteis</option>
+                  <option value="semanas">Semanas</option>
+                  <option value="meses" selected>Meses</option>
+                  <option value="anos">Anos</option>
+                  <option value="_outro">Outro…</option>
+                </select>
+              </div>
+              <input type="text" id="prazo-outro" placeholder="Especifique o prazo…" style="display:none;margin-top:7px">
+            </div>
+            <div class="field">
+              <label class="field-label">Início previsto</label>
+              <input type="text" id="data-inicio" placeholder="Ex: após assinatura do contrato">
+            </div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary" onclick="goPage(3)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div><!-- /page-2 -->
+
+    <!-- ETAPA 3 — FINANCEIRO -->
+    <div id="page-3" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+          <div><div class="card-title">Valor e pagamento</div><div class="card-desc">Preço total, forma de medição e reajuste</div></div>
+        </div>
+        <div class="form-grid">
+
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Valor total do contrato <span>*</span></label>
+              <input type="text" id="valor-total" placeholder="R$ 0,00" oninput="mascaraValor(this);autoExtenso()">
+            </div>
+            <div class="field">
+              <label class="field-label">Valor por extenso</label>
+              <input type="text" id="valor-extenso" placeholder="Preenchido automaticamente" style="color:var(--muted)">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Forma de pagamento / medição <span>*</span></label>
+            <div class="elist-items" id="pagamento-items"></div>
+            <div class="elist-add-row"><input type="text" id="pagamento-input" placeholder="Ex: 30% na assinatura + 70% na entrega…"><button class="elist-add-btn" onclick="ea('pagamento')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('pagamento','Medição mensal com boletim de medição aprovado')">Medição mensal</span>
+              <span class="chip" onclick="es('pagamento','Por etapas físicas do cronograma')">Por etapas</span>
+              <span class="chip" onclick="es('pagamento','Preço global com parcelas mensais iguais')">Parcelas mensais</span>
+              <span class="chip" onclick="es('pagamento','30% na assinatura + 70% na entrega da obra')">30% + 70%</span>
+              <span class="chip" onclick="es('pagamento','Pagamento único ao final da obra')">Pagamento único</span>
+              <span class="chip" onclick="es('pagamento','Sinal de 20% + parcelas mensais conforme avanço físico')">Sinal + parcelas</span>
+            </div>
+          </div>
+
+          <!-- DADOS BANCÁRIOS / PIX -->
+          <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px">Dados para pagamento</div>
+            <div class="form-grid">
+              <div class="field">
+                <label class="field-label">Tipo de recebimento preferido</label>
+                <select id="tipo-pagto" onchange="toggleTipoPagto()">
+                  <option value="">Selecione…</option>
+                  <option value="pix">PIX</option>
+                  <option value="ted">Transferência / TED</option>
+                  <option value="boleto">Boleto bancário</option>
+                  <option value="cheque">Cheque nominal</option>
+                  <option value="dinheiro">Dinheiro</option>
+                </select>
+              </div>
+              <div id="campo-pix" style="display:none">
+                <div class="form-row">
+                  <div class="field">
+                    <label class="field-label">Tipo de chave PIX</label>
+                    <select id="pix-tipo" onchange="togglePixTipo()">
+                      <option value="">Selecione…</option>
+                      <option value="cpf">CPF</option>
+                      <option value="cnpj">CNPJ</option>
+                      <option value="email">E-mail</option>
+                      <option value="celular">Celular</option>
+                      <option value="telefone">Telefone fixo</option>
+                      <option value="aleatoria">Chave aleatória</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="field-label">Chave PIX</label>
+                    <input type="text" id="pix-chave" placeholder="Digite a chave cadastrada">
+                    <div class="field-hint" id="pix-hint" style="margin-top:4px;display:none"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="campos-ted" style="display:none">
+                <div class="form-grid">
+                  <div class="form-row">
+                    <div class="field">
+                      <label class="field-label">Banco</label>
+                      <input type="text" id="banco-nome" placeholder="Ex: Banco do Brasil — 001">
+                    </div>
+                    <div class="field">
+                      <label class="field-label">Agência</label>
+                      <input type="text" id="banco-agencia" placeholder="Ex: 1234-5">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="field">
+                      <label class="field-label">Conta corrente / poupança</label>
+                      <input type="text" id="banco-conta" placeholder="Ex: 12345-6">
+                    </div>
+                    <div class="field">
+                      <label class="field-label">Titular da conta</label>
+                      <input type="text" id="banco-titular" placeholder="Ex: Construtora ABC Ltda.">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Reajuste de preço</label>
+            <div class="elist-items" id="reajuste-items"></div>
+            <div class="elist-add-row"><input type="text" id="reajuste-input" placeholder="Ex: INCC a cada 12 meses…"><button class="elist-add-btn" onclick="ea('reajuste')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('reajuste','Sem previsão de reajuste para contratos de curta duração')">Sem reajuste</span>
+              <span class="chip" onclick="es('reajuste','Reajuste pelo INCC a cada 12 meses')">INCC anual</span>
+              <span class="chip" onclick="es('reajuste','Reajuste pelo IPCA a cada 12 meses')">IPCA anual</span>
+              <span class="chip" onclick="es('reajuste','Reajuste pelo CUB/m² do estado a cada 12 meses')">CUB anual</span>
+              <span class="chip" onclick="es('reajuste','Reajuste por negociação entre as partes a cada 6 meses')">Negociação semestral</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Multas e penalidades</label>
+            <div class="elist-items" id="multas-items"></div>
+            <div class="elist-add-row"><input type="text" id="multas-input" placeholder="Ex: 2% ao mês sobre o valor em atraso…"><button class="elist-add-btn" onclick="ea('multas')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('multas','Multa moratória de 2% ao mês sobre o valor em atraso')">Multa 2%/mês</span>
+              <span class="chip" onclick="es('multas','Multa por atraso na entrega da obra: 0,5% do valor total por semana de atraso, limitada a 10%')">Atraso na entrega</span>
+              <span class="chip" onclick="es('multas','Multa rescisória de 10% sobre o valor total do contrato')">Rescisória 10%</span>
+              <span class="chip" onclick="es('multas','Juros de mora de 1% ao mês sobre parcelas em atraso')">Juros 1%/mês</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary" onclick="goPage(4)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div><!-- /page-3 -->
+
+    <!-- ETAPA 4 — CLÁUSULAS ESPECIAIS -->
+    <div id="page-4" style="display:none">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div><div class="card-title">Responsabilidades e garantias</div><div class="card-desc">Quem responde pelo quê — inclui ART, seguro, garantia da obra</div></div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <div class="elist-items" id="responsabilidades-items"></div>
+            <div class="elist-add-row"><input type="text" id="responsabilidades-input" placeholder="Ex: ART/RRT de execução por conta do Contratado…"><button class="elist-add-btn" onclick="ea('responsabilidades')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('responsabilidades','ART/RRT de execução emitida pelo Contratado e custeada pelo Contratante')">ART/RRT</span>
+              <span class="chip" onclick="es('responsabilidades','Seguro de obra por conta do Contratante')">Seguro pelo Contratante</span>
+              <span class="chip" onclick="es('responsabilidades','Seguro de obra por conta do Contratado, custo incluído no contrato')">Seguro pelo Contratado</span>
+              <span class="chip" onclick="es('responsabilidades','Garantia de 5 anos para vícios de construção (Código Civil, art. 618)')">Garantia 5 anos</span>
+              <span class="chip" onclick="es('responsabilidades','Garantia de 90 dias para serviços de acabamento')">Garantia acabamento</span>
+              <span class="chip" onclick="es('responsabilidades','Fornecimento de energia elétrica e água durante a obra por conta do Contratante')">Energia e água</span>
+              <span class="chip" onclick="es('responsabilidades','Alvará de construção e licenças por conta do Contratante')">Alvará pelo Contratante</span>
+              <span class="chip" onclick="es('responsabilidades','Projetos executivos fornecidos pelo Contratante antes do início das obras')">Projetos pelo Contratante</span>
+              <span class="chip" onclick="es('responsabilidades','Acesso livre ao local em horário comercial garantido pelo Contratante')">Acesso livre</span>
+              <span class="chip" onclick="es('responsabilidades','EPI e segurança do trabalho da equipe do Contratado são responsabilidade do Contratado')">EPI e segurança</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+          <div><div class="card-title">Exclusões e limitações</div><div class="card-desc">O que NÃO está incluído no contrato</div></div>
+        </div>
+        <div class="field">
+          <div class="field-hint">Digite e pressione <strong>Enter</strong> para adicionar cada exclusão.</div>
+          <div class="tag-wrap" onclick="document.getElementById('excl-input').focus()">
+            <div id="excl-tags"></div>
+            <input type="text" id="excl-input" class="tag-input" placeholder="Ex: mobiliário, paisagismo…">
+          </div>
+          <div class="suggestions" id="excl-sugestoes" style="margin-top:7px"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div><div class="card-title">Cláusulas adicionais</div><div class="card-desc">Rescisão, alterações, cessão e outras condições</div></div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label">Condições de rescisão</label>
+            <div class="elist-items" id="rescisao-items"></div>
+            <div class="elist-add-row"><input type="text" id="rescisao-input" placeholder="Ex: Com aviso prévio de 30 dias…"><button class="elist-add-btn" onclick="ea('rescisao')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('rescisao','Rescisão imotivada com aviso prévio mínimo de 30 dias')">Aviso 30 dias</span>
+              <span class="chip" onclick="es('rescisao','Rescisão por falta grave com notificação por escrito e prazo de 5 dias para cura')">Por falta grave</span>
+              <span class="chip" onclick="es('rescisao','Em caso de rescisão pelo Contratante, medição de serviços executados e pagamento proporcional')">Medição na rescisão</span>
+              <span class="chip" onclick="es('rescisao','Caso fortuito ou força maior: prazo suspenso e partes isentas de penalidades')">Caso fortuito</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Alterações de escopo</label>
+            <div class="elist-items" id="aditivos-items"></div>
+            <div class="elist-add-row"><input type="text" id="aditivos-input" placeholder="Ex: Qualquer alteração por aditivo escrito…"><button class="elist-add-btn" onclick="ea('aditivos')">＋</button></div>
+            <div class="suggestions">
+              <span class="chip" onclick="es('aditivos','Qualquer alteração de escopo deve ser formalizada por aditivo contratual assinado pelas partes')">Aditivo obrigatório</span>
+              <span class="chip" onclick="es('aditivos','Serviços extras cobrados por preço unitário conforme tabela SINAPI ou composição acordada')">Extras por SINAPI</span>
+              <span class="chip" onclick="es('aditivos','Alterações solicitadas pelo Contratante podem implicar revisão do prazo')">Prazo revisível</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Observações e disposições finais</label>
+            <textarea id="obs-extras" rows="2" placeholder="Ex: As partes elegem o foro acima mencionado, com renúncia de qualquer outro por mais privilegiado que seja…"></textarea>
+          </div>
+          <div class="field">
+            <label class="field-label">Rodapé do documento (papel timbrado)</label>
+            <div class="field-hint">Aparece no rodapé de todas as páginas — CNPJ, endereço, telefone ou slogan.</div>
+            <textarea id="rodape-texto" rows="2" placeholder="Ex: Construtora ABC Ltda. · CNPJ 00.000.000/0001-00 · Rua das Obras, 123 · (11) 99999-0000"></textarea>
+          </div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary btn-lg" onclick="gerarPrompt()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Montar prompt
+          </button>
+        </div>
+      </div>
+    </div><!-- /page-4 -->
+
+  </div><!-- /section-form -->
+
+  <!-- ═══════════════ PROMPT ═══ -->
+  <div id="section-prompt" style="display:none">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:var(--text)">Prompt pronto</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Selecione a IA, copie o prompt e gere o contrato</div>
+      </div>
+      <button class="btn btn-ghost" onclick="voltarForm()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Editar dados</button>
+    </div>
+
+    <!-- SELETOR IA -->
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">1. Selecione a IA que vai gerar o contrato</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ai-sel-btn" id="ai-btn-gpt" onclick="selAI('gpt',this)">
+          <svg width="15" height="15" viewBox="0 0 41 41" fill="none"><path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.842-3.443 10.079 10.079 0 00-9.61 6.956 9.967 9.967 0 00-6.67 4.744 10.081 10.081 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.843 3.343 10.079 10.079 0 009.608-6.999 9.967 9.967 0 006.671-4.744 10.079 10.079 0 00-1.24-11.816zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103l-8.051 4.649a7.504 7.504 0 01-10.24-2.744zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.05-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.499v4.998l-4.331 2.5-4.331-2.5V18z" fill="#111"/></svg>
+          ChatGPT
+        </button>
+        <button class="ai-sel-btn" id="ai-btn-claude" onclick="selAI('claude',this)" style="color:#C96442">
+          <svg width="15" height="15" viewBox="0 0 100 100"><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(45 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(135 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(225 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(315 50 50)"/></svg>
+          Claude
+        </button>
+        <button class="ai-sel-btn" id="ai-btn-gemini" onclick="selAI('gemini',this)" style="color:#1C7DEB">
+          <svg width="15" height="15" viewBox="0 0 28 28" fill="none"><defs><linearGradient id="gg2" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1BA1E3"/><stop offset="100%" stop-color="#9B72CB"/></linearGradient></defs><path d="M14 0.5C14 0.5 14 10 9 14C4 18 0.5 14 0.5 14C0.5 14 10 14 14 19C18 24 14 27.5 14 27.5C14 27.5 14 18 19 14C24 10 27.5 14 27.5 14C27.5 14 18 14 14 9C10 4 14 0.5 14 0.5Z" fill="url(#gg2)"/></svg>
+          Gemini
+        </button>
+      </div>
+    </div>
+
+    <!-- INSTRUÇÕES -->
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">2. Como funciona</div>
+      <div class="pstep" style="margin-bottom:8px"><div class="pstep-num">1</div><div class="pstep-text">Clique em <strong>"Copiar prompt e abrir IA"</strong> abaixo. Para <strong>ChatGPT</strong> e <strong>Gemini</strong>, o prompt é enviado direto. Para o <strong>Claude</strong>, o chat abre em branco — cole com <strong>Ctrl+V</strong>.</div></div>
+      <div class="pstep" style="margin-bottom:8px"><div class="pstep-num">2</div><div class="pstep-text">Aguarde a geração completa do contrato. Se a IA parar antes do fim, peça <strong>"continue"</strong> até terminar todas as cláusulas.</div></div>
+      <div class="pstep"><div class="pstep-num">3</div><div class="pstep-text">Copie todo o texto gerado e cole no campo <strong>"Colar e formatar"</strong> abaixo para gerar o documento final com layout profissional e assinaturas.</div></div>
+    </div>
+
+    <!-- BOTÃO PRINCIPAL -->
+    <div style="margin-bottom:22px">
+      <button class="btn btn-primary btn-lg" id="btn-copiar-abrir" onclick="copiarAbrirIA()" style="width:100%;justify-content:center;font-size:15px;padding:15px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar prompt e abrir IA
+      </button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted-light);margin-top:8px" id="ai-sel-hint">Selecione uma IA acima para continuar</div>
+    </div>
+
+    <!-- PROMPT BOX -->
+    <div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Prompt gerado</div>
+        <button onclick="copiarAbrirIA()" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;background:var(--blue);color:#fff;border:none;border-radius:4px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif" onmouseover="this.style.background='#1245B8'" onmouseout="this.style.background='var(--blue)'">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copiar e abrir
+        </button>
+      </div>
+      <pre id="prompt-box"></pre>
+    </div>
+
+    <!-- COLAR CONTRATO -->
+    <div class="card" style="border-color:var(--green);background:var(--green-bg)">
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="width:34px;height:34px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13.5px;font-weight:700;color:var(--green);margin-bottom:4px">Cole o texto gerado pela IA aqui</div>
+          <div style="font-size:12.5px;color:#1a5c3a;margin-bottom:11px;line-height:1.55">Após a IA gerar o contrato, copie todo o texto e cole abaixo. A ferramenta formata com layout profissional, logos, cláusulas numeradas e bloco de assinaturas.</div>
+          <textarea id="contrato-paste" rows="5" placeholder="Cole aqui o texto gerado pela IA…" style="background:#fff;border-color:#a8d8be"></textarea>
+          <div style="margin-top:9px;display:flex;justify-content:flex-end">
+            <button class="btn btn-green" onclick="formatarContrato()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Colar e formatar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box" style="flex-direction:column;align-items:stretch;gap:10px">
+      <h3>Quer ir além do contrato? Então conheça a OrçaFascio!</h3>
+      <p style="margin:0">Líder em gestão de obras no Brasil, a OrçaFascio tem ferramentas para orçamento, medição, planejamento, BIM e várias outras. Teste grátis durante 7 dias (sem cartão!).</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+        <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg"
+             alt="OrçaFascio" style="height:22px;opacity:.65;filter:brightness(0) invert(1)"
+             onerror="this.style.display='none'">
+        <a href="https://app.orcafascio.com/usuarios/new/?_gl=1*1lrxv8f*_gcl_aw*R0NMLjE3NzgxNzgzMTIuQ2owS0NRanc4UERQQmhDZUFSSXNBT0p3bVdWaVNhSWNBMGd1V3REWE9Odjk2Q0ZxV051RjJDQVowN3lzeHJFZ2UtSW9BY19hZU82UEZFRWFBa3FNRUFMd193Y0I.*_gcl_au*MTA1ODg4ODExNS4xNzgwOTE1NTgx" target="_blank" class="btn btn-white">Quero experimentar!</a>
+      </div>
+    </div>
+
+  </div><!-- /section-prompt -->
+
+  <!-- ═══════════════ CONTRATO FINAL ═══ -->
+  <div id="section-result" style="display:none">
+
+    <div class="result-actions-bar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:var(--text)">Contrato de obra</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:2px" id="result-sub"></div>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn btn-ghost" onclick="voltarPrompt()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div id="editor-wrap">
+      <div class="editor-toolbar">
+        <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px">Editar:</span>
+        <button class="tb-btn" onclick="fmt('bold')" title="Negrito"><b>N</b></button>
+        <button class="tb-btn" onclick="fmt('italic')" title="Itálico"><i>I</i></button>
+        <button class="tb-btn" onclick="fmt('underline')" title="Sublinhado"><u>S</u></button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmtBlock('h1')" title="Título 1">H1</button>
+        <button class="tb-btn" onclick="fmtBlock('h2')" title="Título 2">H2</button>
+        <button class="tb-btn" onclick="fmtBlock('h3')" title="Título 3">H3</button>
+        <button class="tb-btn" onclick="fmtBlock('p')" title="Parágrafo">¶</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmt('insertUnorderedList')" title="Lista com bullets">≡</button>
+        <button class="tb-btn" onclick="fmt('insertOrderedList')" title="Lista numerada">1.</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="document.execCommand('undo')" title="Desfazer">↩</button>
+        <button class="tb-btn" onclick="document.execCommand('redo')" title="Refazer">↪</button>
+      </div>
+      <div class="result-doc" id="doc-content" contenteditable="true" spellcheck="true"></div>
+    </div>
+
+    <!-- AÇÕES PÓS-DOCUMENTO -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:18px;margin-bottom:10px">
+      <button class="btn btn-outline" onclick="removerTodasOrientacoes()" style="gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        Remover orientações
+      </button>
+      <span style="font-size:11.5px;color:var(--muted-light)">Remova as orientações laranja antes de imprimir ou enviar para assinatura</span>
+    </div>
+
+    <!-- DOWNLOADS -->
+    <div class="dl-bar">
+      <span class="dl-label">Download:</span>
+      <button class="btn-dl" id="btn-dl-save" onclick="salvarHTML()" style="background:rgba(27,140,90,.35);border-color:rgba(27,140,90,.6)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar (.html)
+      </button>
+      <button class="btn-dl" id="btn-dl-print" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF / Imprimir
+      </button>
+      <button class="btn-dl" id="btn-dl-docx" onclick="baixarDocx()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Word (.docx)
+      </button>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;margin-left:auto">Para PDF: "Imprimir → Salvar como PDF" no browser</span>
+    </div>
+
+    <div class="cta-box" style="flex-direction:column;align-items:stretch;gap:10px">
+      <h3>Quer ir além do contrato? Então conheça a OrçaFascio!</h3>
+      <p style="margin:0">Líder em gestão de obras no Brasil, a OrçaFascio tem ferramentas para orçamento, medição, planejamento, BIM e várias outras. Teste grátis durante 7 dias (sem cartão!).</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+        <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg"
+             alt="OrçaFascio" style="height:22px;opacity:.65;filter:brightness(0) invert(1)"
+             onerror="this.style.display='none'">
+        <a href="https://app.orcafascio.com/usuarios/new/?_gl=1*1lrxv8f*_gcl_aw*R0NMLjE3NzgxNzgzMTIuQ2owS0NRanc4UERQQmhDZUFSSXNBT0p3bVdWaVNhSWNBMGd1V3REWE9Odjk2Q0ZxV051RjJDQVowN3lzeHJFZ2UtSW9BY19hZU82UEZFRWFBa3FNRUFMd193Y0I.*_gcl_au*MTA1ODg4ODExNS4xNzgwOTE1NTgx" target="_blank" class="btn btn-white">Quero experimentar!</a>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:14px">
+      <button class="btn btn-ghost" onclick="resetForm()" style="font-size:12.5px;color:var(--muted-light)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.63"/></svg>
+        Novo contrato
+      </button>
+    </div>
+
+  </div><!-- /section-result -->
+
+</div><!-- /container -->
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
+
