@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de BDI — OrçaFascio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="header">
+  <img class="header-logo" src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio" onerror="this.outerHTML='<div style=\'display:flex;align-items:center;gap:10px;position:relative;z-index:1\'><svg width=\'44\' height=\'44\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><polyline points=\'16,11 7,24 16,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><polyline points=\'32,11 41,24 32,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><rect x=\'19.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'24\' y=\'11\' width=\'3\' height=\'21\' fill=\'white\'/><rect x=\'28.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'19.5\' y=\'32\' width=\'12\' height=\'2.8\' fill=\'white\'/></svg><span style=\'font-size:22px;font-weight:800;color:#fff;letter-spacing:.1em;text-transform:uppercase\'>OrçaFascio</span></div>'" >
+  <div class="header-badge">Ferramentas gratuitas</div>
+  <div class="header-title">Gerador de BDI para obras</div>
+  <div class="header-sub">Calcule o BDI componente a componente, com memória de cálculo completa e em conformidade com o TCU.</div>
+</div>
+
+<div class="container">
+
+  <div class="save-bar">
+    <label class="btn-save btn-save-primary" style="cursor:pointer">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Importar BDI salvo
+      <input type="file" accept=".html" style="display:none" onchange="importarHTML(this)">
+    </label>
+    <span style="font-size:11px;color:var(--muted-light);margin-left:6px">Apenas arquivos <strong>.html</strong> gerados nesta ferramenta</span>
+  </div>
+
+  <div class="steps">
+    <div class="step active" id="step-1" onclick="goStepNav(1)"><div class="step-num">1</div><div class="step-label">Identificação</div></div>
+    <div class="step" id="step-2" onclick="goStepNav(2)"><div class="step-num">2</div><div class="step-label">Tributos</div></div>
+    <div class="step" id="step-3" onclick="goStepNav(3)"><div class="step-num">3</div><div class="step-label">Custos indiretos</div></div>
+    <div class="step" id="step-4" onclick="goStepNav(4)"><div class="step-num">4</div><div class="step-label">Margem</div></div>
+    <div class="step" id="step-5" onclick="goStepNav(5)"><div class="step-num">5</div><div class="step-label">Resultado</div></div>
+  </div>
+
+  <!-- PAGE 1 -->
+  <div id="page-1" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div><div class="card-title">Identificação da obra</div><div class="card-desc">Informações básicas que aparecem no relatório de BDI</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="field"><label class="field-label">Empresa / Construtora <span>*</span></label><input type="text" id="empresa" placeholder="Ex: Construtora Silva Ltda."></div>
+          <div class="field"><label class="field-label">Obra / Objeto</label><input type="text" id="objeto" placeholder="Ex: Pavimentação asfáltica — Rua XV de Novembro"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label class="field-label">Data de referência</label><input type="date" id="data-ref"></div>
+          <div class="field"><label class="field-label">Responsável pelo orçamento</label><input type="text" id="responsavel" placeholder="Ex: Eng. João Costa, CREA 12345-D/SP"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div><div class="card-title">Tipo de obra</div><div class="card-desc">Define os limites de referência do TCU para cada componente do BDI</div></div>
+      </div>
+      <div class="field">
+        <label class="field-label">Categoria da obra <span>*</span></label>
+        <div class="radio-tabs">
+          <label class="radio-tab selected" onclick="selectTipo(this,'edificacoes')"><input type="radio" name="tipo-obra" value="edificacoes" checked>Edificações</label>
+          <label class="radio-tab" onclick="selectTipo(this,'pavimentacao')"><input type="radio" name="tipo-obra" value="pavimentacao">Pavimentação</label>
+          <label class="radio-tab" onclick="selectTipo(this,'saneamento')"><input type="radio" name="tipo-obra" value="saneamento">Saneamento / Hidráulica</label>
+          <label class="radio-tab" onclick="selectTipo(this,'instalacoes')"><input type="radio" name="tipo-obra" value="instalacoes">Instalações e montagens</label>
+          <label class="radio-tab" onclick="selectTipo(this,'outro')"><input type="radio" name="tipo-obra" value="outro">Outro</label>
+        </div>
+        <div class="field-hint" id="tipo-hint" style="margin-top:6px">Edificações: faixa de referência do TCU de 18% a 30%.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div><div class="card-title">Regime de execução e contratação</div><div class="card-desc">Influencia os componentes aplicáveis ao BDI</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="field"><label class="field-label">Regime tributário <span>*</span></label>
+            <select id="regime-tributario" onchange="onRegimeTributarioChange()">
+              <option value="lucro_presumido">Lucro Presumido</option>
+              <option value="lucro_real">Lucro Real</option>
+              <option value="simples">Simples Nacional</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label">Regime de execução</label>
+            <select id="regime-execucao">
+              <option value="empreitada_global">Empreitada global</option>
+              <option value="empreitada_preco_unitario">Empreitada por preço unitário</option>
+              <option value="tarefa">Tarefa</option>
+              <option value="administracao_contratada">Administração contratada</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label class="field-label">Modalidade de licitação / contratação</label>
+          <select id="modalidade">
+            <option value="concorrencia">Concorrência (Lei 14.133/2021)</option>
+            <option value="pregao">Pregão eletrônico</option>
+            <option value="dispensa">Dispensa de licitação</option>
+            <option value="contrato_privado">Contrato privado (obra particular)</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+      </div>
+    </div>
+        <div class="btn-actions"><button class="btn btn-primary" onclick="goPage(2)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page-2" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <div><div class="card-title">Tributos incidentes sobre o faturamento</div><div class="card-desc">Componente T do BDI — alíquotas aplicadas sobre o preço de venda</div></div>
+      </div>
+      <div id="aviso-regime" class="bdi-aviso" style="display:none;margin-bottom:16px"></div>
+      <div class="form-grid">
+        <div class="form-row-3">
+          <div class="field"><label class="field-label">ISS <span>*</span></label><div class="input-pct"><input type="number" id="t-iss" value="3.00" min="0" max="5" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">2% a 5% — verificar legislação municipal</div></div>
+          <div class="field"><label class="field-label">PIS <span>*</span></label><div class="input-pct"><input type="number" id="t-pis" value="0.65" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint" id="hint-pis">LP: 0,65% · LR: 1,65%</div></div>
+          <div class="field"><label class="field-label">COFINS <span>*</span></label><div class="input-pct"><input type="number" id="t-cofins" value="3.00" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint" id="hint-cofins">LP: 3,00% · LR: 7,60%</div></div>
+        </div>
+        <div class="form-row-3">
+          <div class="field"><label class="field-label">CSLL</label><div class="input-pct"><input type="number" id="t-csll" value="1.08" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">LP: ~1,08%</div></div>
+          <div class="field"><label class="field-label">IRPJ</label><div class="input-pct"><input type="number" id="t-irpj" value="1.20" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">LP: ~1,20%</div></div>
+          <div class="field"><label class="field-label">Outros tributos</label><div class="input-pct"><input type="number" id="t-outros" value="0.00" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">CPRB, contribuições etc.</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:12px 16px;background:var(--bg);border-radius:var(--radius-sm);display:flex;align-items:center;gap:14px">
+        <span style="font-size:11.5px;color:var(--muted)">Total tributos (T)</span>
+        <span id="total-tributos" style="font-size:18px;font-weight:800;color:var(--blue)">—</span>
+        <span id="status-tributos" style="font-size:11.5px;font-weight:600"></span>
+      </div>
+    </div>
+        <div class="btn-actions"><button class="btn btn-outline" onclick="goPage(1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button><button class="btn btn-primary" onclick="goPage(3)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div id="page-3" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></svg></div>
+        <div><div class="card-title">Administração central (AC)</div><div class="card-desc">Rateio dos custos fixos da empresa sobre o custo direto</div></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label class="field-label">Administração central <span>*</span></label><div class="input-pct"><input type="number" id="ac" value="4.00" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">TCU: 3% a 6% sobre custo direto</div></div>
+        <div class="field"><label class="field-label">Referência TCU</label>
+          <select id="ac-ref" onchange="setACRef()">
+            <option value="custom">Valor personalizado</option>
+            <option value="3">Mínimo TCU: 3,00%</option>
+            <option value="4" selected>Recomendado: 4,00%</option>
+            <option value="6">Máximo TCU: 6,00%</option>
+          </select>
+        </div>
+      </div>
+      <div class="suggestions"><span class="chip" onclick="setVal('ac',3)">3,00%</span><span class="chip" onclick="setVal('ac',4)">4,00%</span><span class="chip" onclick="setVal('ac',5)">5,00%</span><span class="chip" onclick="setVal('ac',6)">6,00%</span></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div class="card-title">Seguros e garantias (S)</div><div class="card-desc">Seguros de obras, riscos de engenharia e garantias contratuais</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="field"><label class="field-label">Seguros de obra <span>*</span></label><div class="input-pct"><input type="number" id="s-seguros" value="0.50" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">Risco de engenharia: 0,30% a 0,80%</div></div>
+          <div class="field"><label class="field-label">Garantias contratuais</label><div class="input-pct"><input type="number" id="s-garantias" value="0.30" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">Caução ou seguro-garantia: 0,20% a 0,50%</div></div>
+        </div>
+        <div class="field"><label class="field-label">Outros seguros</label><div class="input-pct"><input type="number" id="s-outros" value="0.00" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div><div class="card-title">Riscos (R)</div><div class="card-desc">Imprevistos, riscos tecnológicos, de prazo e de mercado</div></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label class="field-label">Riscos <span>*</span></label><div class="input-pct"><input type="number" id="r-riscos" value="1.27" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">TCU: 0,50% a 2,50%</div></div>
+        <div class="field"><label class="field-label">Perfil de risco</label>
+          <select id="risco-perfil" onchange="setRiscoPerfil()">
+            <option value="custom">Personalizado</option>
+            <option value="baixo">Baixo risco: 0,50%</option>
+            <option value="medio" selected>Médio risco: 1,27%</option>
+            <option value="alto">Alto risco: 2,50%</option>
+          </select>
+        </div>
+      </div>
+      <div class="suggestions"><span class="chip" onclick="setVal('r-riscos',0.5)">0,50%</span><span class="chip" onclick="setVal('r-riscos',1.0)">1,00%</span><span class="chip" onclick="setVal('r-riscos',1.27)">1,27%</span><span class="chip" onclick="setVal('r-riscos',2.0)">2,00%</span><span class="chip" onclick="setVal('r-riscos',2.5)">2,50%</span></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div><div class="card-title">Despesas financeiras (DF)</div><div class="card-desc">Custo do capital de giro durante a execução</div></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label class="field-label">Despesas financeiras <span>*</span></label><div class="input-pct"><input type="number" id="df" value="1.20" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">TCU: 0,50% a 2,20%</div></div>
+        <div class="field"><div class="field-hint" style="margin-top:26px">Custo do capital para financiar o ciclo entre medições e pagamentos.</div></div>
+      </div>
+      <div class="suggestions"><span class="chip" onclick="setVal('df',0.5)">0,50%</span><span class="chip" onclick="setVal('df',1.0)">1,00%</span><span class="chip" onclick="setVal('df',1.2)">1,20%</span><span class="chip" onclick="setVal('df',2.0)">2,00%</span></div>
+    </div>
+        <div class="btn-actions"><button class="btn btn-outline" onclick="goPage(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button><button class="btn btn-primary" onclick="goPage(4)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div id="page-4" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div><div class="card-title">Lucro bruto (LB)</div><div class="card-desc">Remuneração do empresário pelo risco do negócio</div></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label class="field-label">Lucro bruto desejado <span>*</span></label><div class="input-pct"><input type="number" id="lb" value="7.40" min="0" step="0.01" oninput="calcBDI()"><span class="input-pct-unit">%</span></div><div class="field-hint">TCU: 5% a 12% sobre custo direto</div></div>
+        <div class="field"><label class="field-label">Perfil de margem</label>
+          <select id="lb-perfil" onchange="setLBPerfil()">
+            <option value="custom">Personalizado</option>
+            <option value="minimo">Mínimo TCU: 5,00%</option>
+            <option value="medio" selected>Médio: 7,40%</option>
+            <option value="maximo">Máximo TCU: 12,00%</option>
+          </select>
+        </div>
+      </div>
+      <div class="suggestions"><span class="chip" onclick="setVal('lb',5)">5,00%</span><span class="chip" onclick="setVal('lb',6)">6,00%</span><span class="chip" onclick="setVal('lb',7.4)">7,40%</span><span class="chip" onclick="setVal('lb',8)">8,00%</span><span class="chip" onclick="setVal('lb',10)">10,00%</span><span class="chip" onclick="setVal('lb',12)">12,00%</span></div>
+      <div style="margin-top:16px;padding:12px 16px;background:var(--orange-bg);border:1.5px solid #f0c090;border-radius:var(--radius-sm)">
+        <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">⚡ Aviso TCU</div>
+        <div style="font-size:12px;color:#7a3c00;line-height:1.6">O Acórdão 2.369/2011-TCU-Plenário estabelece balizas para cada componente do BDI. Valores fora das faixas recomendadas exigem justificativa técnica no processo licitatório.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><div class="card-title">Resumo em tempo real</div><div class="card-desc">Prévia do BDI com os valores atuais</div></div>
+      </div>
+      <div id="preview-bdi"></div>
+    </div>
+        <div class="btn-actions"><button class="btn btn-outline" onclick="goPage(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button><button class="btn btn-primary" onclick="gerarResultado()">Gerar memória de cálculo <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div id="page-5" style="display:none">
+    <div id="bdi-resultado-bloco"></div>
+
+    <div class="card" id="section-prompt-card">
+      <div class="card-header">
+        <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div><div class="card-title">Justificativa técnica com IA</div><div class="card-desc">Gere o texto, cole abaixo e incorpore ao documento final</div></div>
+      </div>
+      <div class="pstep"><div class="pstep-num">1</div><div class="pstep-text"><strong>Copie o prompt</strong> abaixo.</div></div>
+      <div class="pstep"><div class="pstep-num">2</div><div class="pstep-text"><strong>Abra a IA</strong> de sua preferência, cole com <strong>Ctrl+V</strong> e gere o texto.</div></div>
+      <div class="pstep"><div class="pstep-num">3</div><div class="pstep-text"><strong>Cole o texto gerado</strong> no campo abaixo e clique em "Incorporar ao documento".</div></div>
+      <div class="ai-links">
+        <a class="ai-link" href="https://chat.openai.com" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 41 41" fill="none"><path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.842-3.443 10.079 10.079 0 00-9.61 6.956 9.967 9.967 0 00-6.67 4.744 10.081 10.081 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.843 3.343 10.079 10.079 0 009.608-6.999 9.967 9.967 0 006.671-4.744 10.079 10.079 0 00-1.24-11.816zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103l-8.051 4.649a7.504 7.504 0 01-10.24-2.744zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.05-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.499v4.998l-4.331 2.5-4.331-2.5V18z" fill="#111"/></svg>
+          ChatGPT
+        </a>
+        <a class="ai-link" href="https://claude.ai" target="_blank" rel="noopener" style="color:#C96442">
+          <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50,50)"><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="11" stroke-linecap="round"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(27)"/><line x1="0" y1="-46" x2="0" y2="-17" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(54)"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(81)"/><line x1="0" y1="-46" x2="0" y2="-16" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(108)"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(135)"/><line x1="0" y1="-47" x2="0" y2="-17" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(162)"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(189)"/><line x1="0" y1="-46" x2="0" y2="-17" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(216)"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(243)"/><line x1="0" y1="-46" x2="0" y2="-16" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(270)"/><line x1="0" y1="-48" x2="0" y2="-18" stroke="#C96442" stroke-width="10" stroke-linecap="round" transform="rotate(297)"/><line x1="0" y1="-47" x2="0" y2="-17" stroke="#C96442" stroke-width="11" stroke-linecap="round" transform="rotate(324)"/></g></svg>
+          Claude
+        </a>
+        <a class="ai-link" href="https://gemini.google.com" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gv2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EA4335"/><stop offset="50%" stop-color="#FBBC04" stop-opacity="0"/><stop offset="100%" stop-color="#34A853"/></linearGradient><linearGradient id="gh2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FBBC04"/><stop offset="50%" stop-color="#4285F4" stop-opacity="0"/><stop offset="100%" stop-color="#4285F4"/></linearGradient><clipPath id="sc2"><path d="M50,1 C53,22 78,47 99,50 C78,53 53,78 50,99 C47,78 22,53 1,50 C22,47 47,22 50,1Z"/></clipPath></defs><path d="M50,1 C53,22 78,47 99,50 C78,53 53,78 50,99 C47,78 22,53 1,50 C22,47 47,22 50,1Z" fill="#4285F4"/><rect width="100" height="100" fill="url(#gv2)" clip-path="url(#sc2)"/><rect width="100" height="100" fill="url(#gh2)" clip-path="url(#sc2)" opacity="0.75"/></svg>
+          Gemini
+        </a>
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;margin-bottom:20px" onclick="copiarPrompt()" id="btn-copiar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar prompt de justificativa técnica
+      </button>
+      <div id="prompt-gerado" style="display:none;margin-bottom:14px"><div id="prompt-box"></div></div>
+      <div style="border-top:1.5px solid var(--border);padding-top:18px">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Cole aqui o texto gerado pela IA</div>
+        <div class="editor-toolbar">
+          <button class="tb-btn" onclick="docCmd('bold')"><strong>N</strong></button>
+          <button class="tb-btn" onclick="docCmd('italic')"><em>I</em></button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="docCmd('formatBlock','h3')">H3</button>
+          <button class="tb-btn" onclick="docCmd('formatBlock','p')">¶</button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="docCmd('insertUnorderedList')">• Lista</button>
+          <div class="tb-sep"></div>
+          <button class="tb-btn" onclick="limparEditor()" style="color:var(--red)">✕ Limpar</button>
+        </div>
+        <div id="justif-editor" class="result-doc" contenteditable="true" oninput="onEditorChange()" onpaste="handlePaste(event)">
+          <p style="color:var(--muted-light);font-style:italic">Cole aqui o texto gerado pela IA e edite conforme necessário…</p>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn btn-outline" onclick="limparEditor()">Limpar</button>
+          <button class="btn btn-primary" onclick="confirmarJustificativa()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Incorporar ao documento</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Quer orçar com SINAPI, curva ABC e BDI integrados?</h3>
+      <p>A plataforma OrçaFascio integra composição de custos, BDI, medição e diário de obras em um único ambiente — com exportação para licitações públicas e conformidade com o TCU.</p>
+      <div class="cta-row3">
+        <img class="cta-logo" src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio">
+        <a class="btn btn-white btn-lg" href="https://orcafascio.com?utm_source=ferramenta-bdi&utm_medium=cta&utm_campaign=gerador-bdi" target="_blank" rel="noopener">Quero experimentar!</a>
+      </div>
+    </div>
+
+    <div class="btn-actions" style="margin-top:18px">
+      <button class="btn btn-outline" onclick="goPage(4)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Editar valores</button>
+      <button class="btn btn-outline" onclick="novoCalculo()">Novo cálculo</button>
+    </div>
+
+    <div class="save-bar" style="margin-top:14px">
+      <span style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap">Salvar:</span>
+      <button class="btn-save btn-save-primary" onclick="baixarHTML()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Salvar HTML</button>
+      <button class="btn-save" onclick="baixarPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg> Salvar PDF</button>
+      <button class="btn-save" onclick="baixarWord()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Word (.doc)</button>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
