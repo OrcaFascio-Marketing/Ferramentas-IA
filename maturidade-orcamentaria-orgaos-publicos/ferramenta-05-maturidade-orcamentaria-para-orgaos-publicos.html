@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagn&oacute;stico de maturidade or&ccedil;ament&aacute;ria para &oacute;rg&atilde;os p&uacute;blicos &mdash; Or&ccedil;aFascio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=8fAkF1EsbhAdWSwz8HwPofwWU7PqhJ6ze3I6Dyg_ZmZvGourryV0RJ6LFgNWz2OD2P-RonT5XlcWaf-H9IdiMDRpBKILhwR3lEB61wXMBdQQ9P7V2qG9-lq5Kw20U8OFT14N-PXX3PLYAiCjCnD6AVYEN8pjrcFNJnq7aCcdypMjNn23KHASjdGYlfRqW5MM0_DxAr1fXruFJdsc3iTZWUiGzDYIo3TMNesyX8pOBkr9YBZyPpB84e2kHAQDod1J" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=nMrE3wiwHx107pvxZ-RflL4U160xUO0rbbeYujMQckeukyQB6Hv96XCUktLHxSbGDyV5GBAWKpTeyQJ2jFqWRS4Q9grfHgT79B_DTSz6UBqbYahuEKsctIOxlV32v2nOJiszhIn2cpYGfNBJW9-0De5xtSvhl7itfxkKV212SZxuUf55J2NECcPPvK36KzYroukz-USIqSP6qUGUOHuV4-zExukWFkMw5Pu7_-fPVrpBOCIEFZW155bSPhpUcbED" charset="UTF-8"></script><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1560F5;--blue-dark:#0A1A5C;--blue-mid:#1245B8;--blue-light:#EEF3FF;--blue-pale:#F5F8FF;
+  --bg:#F4F7FE;--border:#DDE4FF;--border-strong:#C0CCEE;
+  --text:#0D1B4B;--text-2:#2A3A6A;--muted:#6B7BAA;--muted-light:#9CAAD4;
+  --green:#1B8C5A;--green-bg:#E6F7EF;--red:#E53935;--orange:#E67E22;--orange-bg:#FEF3E8;
+  --yellow:#D4A017;--yellow-bg:#FFFBEA;
+  --shadow-sm:0 1px 4px rgba(21,96,245,.09);--radius:10px;--radius-sm:6px;
+}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+
+.header{background:linear-gradient(135deg,#0A1A5C 0%,#0D2A8A 100%);padding:24px 40px 28px;display:flex;flex-direction:column;align-items:center;gap:9px;position:relative;overflow:hidden}
+.header::before{content:"";position:absolute;width:400px;height:400px;background:rgba(255,255,255,.03);border-radius:50%;top:-200px;right:-100px;pointer-events:none}
+.header-logo{position:relative;z-index:1;height:32px;display:block;filter:brightness(0) invert(1);margin-bottom:10px}
+.header-badge{background:rgba(21,96,245,.4);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 11px;border-radius:20px;position:relative;z-index:1}
+.header-title{color:#fff;font-size:21px;font-weight:800;text-align:center;position:relative;z-index:1;line-height:1.2}
+.header-sub{color:rgba(255,255,255,.55);font-size:13px;text-align:center;position:relative;z-index:1;max-width:500px;line-height:1.5}
+
+.container{max-width:760px;margin:0 auto;padding:28px 24px 80px}
+
+.steps{display:flex;margin-bottom:26px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 4px;border-right:1px solid var(--border);transition:background .2s;cursor:default}
+.step:last-child{border-right:none}
+.step.active{background:var(--blue-light)}
+.step.done{background:var(--green-bg)}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--border);color:var(--muted);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.step.active .step-num{background:var(--blue);color:#fff}
+.step.done .step-num{background:var(--green);color:#fff}
+.step-label{font-size:9.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.2}
+.step.active .step-label{color:var(--blue)}
+.step.done .step-label{color:var(--green)}
+
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 22px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.card-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:18px}
+.card-icon{width:34px;height:34px;border-radius:7px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.3}
+.card-desc{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.form-grid{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(max-width:540px){.form-row{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px}
+.field-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.field-label span{color:var(--red)}
+.field-hint{font-size:11.5px;color:var(--muted-light);line-height:1.4}
+
+input[type=text],input[type=number],textarea,select{font-size:13px;color:var(--text);background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;outline:none;transition:border-color .15s,box-shadow .15s;width:100%;font-family:"Inter",sans-serif}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,96,245,.1)}
+input::placeholder,textarea::placeholder{color:var(--muted-light)}
+textarea{resize:vertical;min-height:80px;line-height:1.55}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7BAA' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:30px;cursor:pointer}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;font-family:"Inter",sans-serif;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(21,96,245,.3)}
+.btn-primary:hover{background:var(--blue-mid)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-outline{background:#fff;color:var(--text);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.btn-ghost{background:transparent;color:var(--muted);border:none}
+.btn-ghost:hover{color:var(--text)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#157a4c}
+.btn-white{background:#fff;color:var(--blue-dark);border:2px solid rgba(255,255,255,.3)}
+.btn-white:hover{background:rgba(255,255,255,.9)}
+.btn-lg{padding:13px 28px;font-size:14.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.btn-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:20px}
+
+/* ESCALA LIKERT */
+.likert-group{display:flex;flex-direction:column;gap:18px;margin-top:4px}
+.likert-item{display:flex;flex-direction:column;gap:8px}
+.likert-question{font-size:13px;color:var(--text-2);font-weight:500;line-height:1.45}
+.likert-question em{font-style:normal;font-size:11px;color:var(--muted);display:block;margin-top:2px}
+.likert-scale{display:flex;gap:6px}
+.likert-opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+.likert-opt input{display:none}
+.likert-dot{width:100%;height:32px;border:1.5px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);transition:all .15s;background:#fff;user-select:none}
+.likert-opt input:checked + .likert-dot{border-color:var(--blue);background:var(--blue);color:#fff}
+.likert-opt:hover .likert-dot{border-color:var(--blue);background:var(--blue-pale);color:var(--blue)}
+.likert-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted-light);font-weight:500;padding:0 2px}
+
+/* EIXO CARD */
+.eixo-card{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+.eixo-header{display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--blue-pale);border-bottom:1.5px solid var(--border);cursor:pointer;user-select:none}
+.eixo-header:hover{background:var(--blue-light)}
+.eixo-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eixo-titulo{font-size:13.5px;font-weight:700;color:var(--text);flex:1}
+.eixo-score{font-size:11.5px;font-weight:700;color:var(--muted);background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.eixo-body{padding:18px;background:#fff;display:block}
+.eixo-body.collapsed{display:none}
+.chevron{transition:transform .2s;flex-shrink:0;color:var(--muted)}
+.chevron.open{transform:rotate(180deg)}
+
+/* AI SELECTOR */
+.pstep{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px}
+.pstep-num{width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pstep-text{font-size:13px;color:var(--text-2);line-height:1.6}
+.pstep-text strong{color:var(--text)}
+.ai-sel-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:#fff;font-size:12.5px;font-weight:600;font-family:"Inter",sans-serif;cursor:pointer;color:var(--text);transition:all .15s;white-space:nowrap}
+.ai-sel-btn:hover{border-color:var(--blue);background:var(--blue-pale)}
+.ai-sel-btn.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
+
+/* RESULT DOC */
+.result-doc{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:32px 36px;min-height:400px;outline:none;line-height:1.7;font-size:14px;color:var(--text)}
+.result-doc h1{font-size:22px;font-weight:800;color:var(--blue-dark);margin-bottom:6px;line-height:1.25}
+.result-doc h2{font-size:16px;font-weight:700;color:var(--blue-dark);margin-top:28px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid var(--border)}
+.result-doc h3{font-size:14px;font-weight:700;color:var(--text);margin-top:18px;margin-bottom:7px}
+.result-doc p{margin-bottom:10px;line-height:1.65}
+.result-doc ul,.result-doc ol{margin:8px 0 12px 20px}
+.result-doc li{margin-bottom:5px;line-height:1.6}
+.result-doc strong{color:var(--text)}
+@media print{.result-doc{border:none;padding:20px 0}}
+
+.editor-toolbar{display:flex;align-items:center;gap:3px;flex-wrap:wrap;padding:8px 10px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm) var(--radius-sm) 0 0;border-bottom:none;margin-bottom:0}
+.tb-btn{background:none;border:none;cursor:pointer;padding:4px 7px;border-radius:4px;font-size:12.5px;color:var(--muted);font-family:"Inter",sans-serif;transition:all .15s}
+.tb-btn:hover{background:var(--blue-light);color:var(--blue)}
+.tb-sep{width:1px;height:16px;background:var(--border);margin:0 3px}
+
+.dl-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 16px;background:#1e2d5a;border-radius:0 0 var(--radius) var(--radius);margin-bottom:14px}
+.dl-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.45);margin-right:4px}
+.btn-dl{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:5px;font-size:12.5px;font-weight:600;font-family:"Inter",sans-serif;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;transition:all .15s}
+.btn-dl:hover{background:rgba(255,255,255,.2)}
+
+.cta-box{background:linear-gradient(135deg,#0A1A5C 0%,#1245B8 100%);border-radius:var(--radius);padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:16px}
+.cta-box h3{color:#fff;font-size:15px;font-weight:700;margin-bottom:5px}
+.cta-box p{color:rgba(255,255,255,.65);font-size:12.5px;line-height:1.5}
+
+/* SCORE PANEL */
+.score-panel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+@media(max-width:540px){.score-panel{grid-template-columns:1fr}}
+.score-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px}
+.score-card-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.score-card-val{font-size:26px;font-weight:800;line-height:1}
+.score-bar{height:6px;border-radius:3px;background:var(--border);margin-top:8px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.score-nivel{font-size:11px;font-weight:600;margin-top:5px}
+
+.nivel-inicial{color:#E53935}
+.nivel-basico{color:#E67E22}
+.nivel-intermediario{color:#D4A017}
+.nivel-avancado{color:#1B8C5A}
+
+/* PROMPT BOX */
+pre#prompt-box{background:#0D1B4B;color:#e8eeff;border-radius:var(--radius-sm);padding:16px;font-size:12px;line-height:1.6;white-space:pre-wrap;word-break:break-word;max-height:280px;overflow-y:auto;font-family:"Fira Mono","Consolas",monospace}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#0D1B4B;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;transition:all .25s;pointer-events:none;z-index:9999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img class="header-logo" src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio" onerror="this.style.display='none'">
+  <span class="header-badge">Ferramenta gratuita</span>
+  <div class="header-title">Diagn&oacute;stico de maturidade or&ccedil;ament&aacute;ria para &oacute;rg&atilde;os p&uacute;blicos</div>
+  <div class="header-sub">Seu &oacute;rg&atilde;o est&aacute; preparado para fiscalizar obras com seguran&ccedil;a t&eacute;cnica? Avalie em minutos e receba recomenda&ccedil;&otilde;es pr&aacute;ticas.</div>
+</div>
+
+<div class="container">
+
+  <div class="steps" id="steps-bar">
+    <div class="step active" id="step-1"><div class="step-num">1</div><div class="step-label">Identifica&ccedil;&atilde;o</div></div>
+    <div class="step" id="step-2"><div class="step-num">2</div><div class="step-label">Editais</div></div>
+    <div class="step" id="step-3"><div class="step-num">3</div><div class="step-label">Composi&ccedil;&otilde;es</div></div>
+    <div class="step" id="step-4"><div class="step-num">4</div><div class="step-label">Aprova&ccedil;&atilde;o</div></div>
+    <div class="step" id="step-5"><div class="step-num">5</div><div class="step-label">Medi&ccedil;&atilde;o</div></div>
+    <div class="step" id="step-6"><div class="step-num">6</div><div class="step-label">Prompt</div></div>
+    <div class="step" id="step-7"><div class="step-num">7</div><div class="step-label">Diagn&oacute;stico</div></div>
+  </div>
+
+  <div id="section-form">
+
+    <!-- ETAPA 1: IDENTIFICACAO -->
+    <div id="page-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+          <div><div class="card-title">Identifica&ccedil;&atilde;o do &oacute;rg&atilde;o</div><div class="card-desc">Informa&ccedil;&otilde;es b&aacute;sicas para contextualizar o diagn&oacute;stico</div></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Nome do &oacute;rg&atilde;o / entidade <span>*</span></label>
+              <input type="text" id="nome-orgao" placeholder="Ex: Prefeitura de São Paulo — Secretaria de Obras">
+            </div>
+            <div class="field">
+              <label class="field-label">Esfera administrativa <span>*</span></label>
+              <select id="esfera">
+                <option value="">Selecione…</option>
+                <option>Federal</option>
+                <option>Estadual</option>
+                <option>Municipal</option>
+                <option>Autarquia / Fundação</option>
+                <option>Empresa pública</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Cargo / fun&ccedil;&atilde;o do respondente <span>*</span></label>
+              <select id="cargo" onchange="toggleCargoOutro(this.value)">
+                <option value="">Selecione…</option>
+                <option>Gestor de contratos</option>
+                <option>Fiscal de obra</option>
+                <option>Coordenador de projetos</option>
+                <option>Engenheiro / Arquiteto público</option>
+                <option>Diretor / Secretário</option>
+                <option>Técnico de orçamento</option>
+                <option value="Outro">Outro</option>
+              </select>
+              <input type="text" id="cargo-outro" placeholder="Informe o cargo…" style="margin-top:6px;display:none">
+            </div>
+            <div class="field">
+              <label class="field-label">Volume anual de contratos de obras</label>
+              <select id="volume-contratos">
+                <option value="">Selecione…</option>
+                <option>Até 5 contratos/ano</option>
+                <option>6 a 20 contratos/ano</option>
+                <option>21 a 50 contratos/ano</option>
+                <option>Mais de 50 contratos/ano</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Valor total anual em obras (aproximado)</label>
+              <select id="valor-anual">
+                <option value="">Selecione…</option>
+                <option>Até R$ 1 milhão</option>
+                <option>R$ 1 a 10 milhões</option>
+                <option>R$ 10 a 50 milhões</option>
+                <option>R$ 50 a 200 milhões</option>
+                <option>Acima de R$ 200 milhões</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">J&aacute; passou por auditoria do TCU / CGU?</label>
+              <select id="auditoria">
+                <option value="">Selecione…</option>
+                <option>Sim, com recomendações</option>
+                <option>Sim, sem ressalvas</option>
+                <option>Não, mas está previsto</option>
+                <option>Nunca passou por auditoria</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Principal desafio atual do &oacute;rg&atilde;o em obras (opcional)</label>
+            <textarea id="desafio" placeholder="Ex: Dificuldade em medir serviços de forma rastreável; falta de padronização nos editais; equipe reduzida para fiscalização…" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-primary" onclick="goPage(2)">Pr&oacute;ximo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 2: EDITAIS -->
+    <div id="page-2" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+          <div><div class="card-title">Eixo 1 — Padroniza&ccedil;&atilde;o de editais</div><div class="card-desc">Avalie o grau de padroniza&ccedil;&atilde;o dos editais de obras no seu &oacute;rg&atilde;o (1 = nunca / inexistente &bull; 5 = sempre / totalmente implementado)</div></div>
+        </div>
+        <div class="likert-group" id="eixo-editais">
+
+          <div class="likert-item" data-id="e1q1">
+            <div class="likert-question">Utilizamos modelos padronizados de edital para obras, aprovados internamente ou baseados em minutas do TCU / CGU.
+              <em>Edital sem modelo-padrão aumenta inconsistências e exposição a recursos.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e1q1" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q1" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q1" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q1" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q1" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e1q2">
+            <div class="likert-question">Os editais de obras incluem planilha or&ccedil;ament&aacute;ria com composi&ccedil;&otilde;es de custo unit&aacute;rio referenciadas em SINAPI ou outra tabela oficial.
+              <em>Exigido pela Lei 14.133/2021, art. 23 e 40.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e1q2" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q2" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q2" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q2" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q2" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e1q3">
+            <div class="likert-question">O edital especifica claramente o regime de execu&ccedil;&atilde;o (pre&ccedil;o unit&aacute;rio, empreitada global, integrada), crit&eacute;rio de julgamento e obrigat&oacute;rios de habita&ccedil;&atilde;o.
+              <em>Falta de clareza gera impugna&ccedil;&otilde;es e suspens&otilde;es.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e1q3" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q3" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q3" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q3" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q3" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e1q4">
+            <div class="likert-question">Realizamos revis&atilde;o jur&iacute;dica e t&eacute;cnica do edital antes da publica&ccedil;&atilde;o, com registro formal de aprova&ccedil;&atilde;o.
+              <em>Revisão prévia reduz contestações e suspeitas de direcionamento.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e1q4" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q4" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q4" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q4" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e1q4" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary" onclick="goPage(3)">Pr&oacute;ximo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 3: COMPOSICOES -->
+    <div id="page-3" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="11" width="18" height="4" rx="1"/><rect x="3" y="19" width="11" height="2" rx="1"/></svg></div>
+          <div><div class="card-title">Eixo 2 — Banco de composi&ccedil;&otilde;es e or&ccedil;amento</div><div class="card-desc">Avalie a qualidade e rastreabilidade dos or&ccedil;amentos praticados pelo &oacute;rg&atilde;o (1 = nunca / inexistente &bull; 5 = sempre / totalmente implementado)</div></div>
+        </div>
+        <div class="likert-group">
+
+          <div class="likert-item" data-id="e2q1">
+            <div class="likert-question">O &oacute;rg&atilde;o mant&eacute;m um banco interno de composi&ccedil;&otilde;es de custo unit&aacute;rio, atualizado periodicamente.
+              <em>Banco próprio acelera a elaboração de orçamentos e garante consistência.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e2q1" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q1" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q1" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q1" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q1" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e2q2">
+            <div class="likert-question">Os or&ccedil;amentos s&atilde;o elaborados com refer&ecirc;ncia obrigat&oacute;ria ao SINAPI (ou SICRO para rodovias), com desonera&ccedil;&atilde;o declarada e BDI justificado.
+              <em>TCU exige rastreabilidade da referência de preço em obras financiadas com recursos públicos.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e2q2" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q2" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q2" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q2" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q2" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e2q3">
+            <div class="likert-question">Os or&ccedil;amentos utilizam curva ABC para identificar os itens de maior impacto financeiro e priorizar a an&aacute;lise de pre&ccedil;os.
+              <em>Curva ABC é referência de boas práticas citada no Acórdão TCU 2622/2013.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e2q3" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q3" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q3" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q3" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q3" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e2q4">
+            <div class="likert-question">Os itens "novos" (n&atilde;o presentes no SINAPI) s&atilde;o cotados com no m&iacute;nimo 3 fornecedores e documentados formalmente.
+              <em>Falta de cotação em itens novos é causa frequente de questionamentos em auditoria.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e2q4" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q4" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q4" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q4" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e2q4" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary" onclick="goPage(4)">Pr&oacute;ximo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 4: APROVACAO -->
+    <div id="page-4" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div><div class="card-title">Eixo 3 — Fluxo de aprova&ccedil;&atilde;o e rastreabilidade</div><div class="card-desc">Avalie os controles internos de aprovação de contratos e aditivos (1 = nunca / inexistente &bull; 5 = sempre / totalmente implementado)</div></div>
+        </div>
+        <div class="likert-group">
+
+          <div class="likert-item" data-id="e3q1">
+            <div class="likert-question">Existe um fluxo formal de aprova&ccedil;&atilde;o para contratos e aditivos, com alçadas definidas e registro das aprova&ccedil;&otilde;es em sistema ou processo digital.
+              <em>Fluxo informal é o principal vetor de irregularidades apontadas em auditorias.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e3q1" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q1" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q1" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q1" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q1" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e3q2">
+            <div class="likert-question">Os aditivos de prazo e valor s&atilde;o fundamentados com justificativa t&eacute;cnica formal, an&aacute;lise da causa e revis&atilde;o da planilha or&ccedil;ament&aacute;ria.
+              <em>Aditivos sem justificativa são a principal causa de determinações do TCU em obras.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e3q2" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q2" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q2" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q2" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q2" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e3q3">
+            <div class="likert-question">Os fiscais de contrato s&atilde;o designados formalmente, com portaria publicada, e possuem capacita&ccedil;&atilde;o t&eacute;cnica comprovada para a natureza da obra.
+              <em>Exigência da Lei 14.133/2021, art. 117. Fiscal sem designação formal implica responsabilidade difusa.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e3q3" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q3" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q3" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q3" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q3" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e3q4">
+            <div class="likert-question">O &oacute;rg&atilde;o utiliza sistema de gest&atilde;o de contratos (ERP, plataforma gov. ou software espec&iacute;fico) para acompanhar prazos, saldos, aditivos e vencimentos.
+              <em>Gestão em planilha manual aumenta risco de extrapolação de prazo e valor sem percepção.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e3q4" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q4" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q4" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q4" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e3q4" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary" onclick="goPage(5)">Pr&oacute;ximo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 5: MEDICAO -->
+    <div id="page-5" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><polyline points="18 17 13 12 9 16 5 11"/></svg></div>
+          <div><div class="card-title">Eixo 4 — Medi&ccedil;&atilde;o e fiscaliza&ccedil;&atilde;o de obras</div><div class="card-desc">Avalie a qualidade dos processos de medição e fiscalização praticados (1 = nunca / inexistente &bull; 5 = sempre / totalmente implementado)</div></div>
+        </div>
+        <div class="likert-group">
+
+          <div class="likert-item" data-id="e4q1">
+            <div class="likert-question">As medi&ccedil;&otilde;es s&atilde;o realizadas in loco pelo fiscal t&eacute;cnico, com registro fotogr&aacute;fico datado e boletim de medi&ccedil;&atilde;o assinado por ambas as partes.
+              <em>Medição sem registro físico é indefensável em auditoria e litígio.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e4q1" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q1" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q1" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q1" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q1" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e4q2">
+            <div class="likert-question">O &oacute;rg&atilde;o mant&eacute;m di&aacute;rio de obra atualizado, com registro das atividades di&aacute;rias, efetivo de pessoal, ocorr&ecirc;ncias e condi&ccedil;&otilde;es clim&aacute;ticas.
+              <em>Diário de obra é documento fundamental em disputas sobre prazo e paralisações.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e4q2" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q2" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q2" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q2" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q2" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e4q3">
+            <div class="likert-question">As medi&ccedil;&otilde;es s&atilde;o confrontadas com o cronograma f&iacute;sico-financeiro e o fiscal emite parecer formal em caso de desvio superior a 10%.
+              <em>Controle de desvio de cronograma é exigência de boa prática e de contratos estruturados.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e4q3" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q3" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q3" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q3" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q3" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e4q4">
+            <div class="likert-question">Existe processo formal de recebimento de obra (provis&oacute;rio e definitivo) com vistoria documentada, lista de pend&ecirc;ncias e termo assinado.
+              <em>Recebimento sem formalização impede responsabilização por vícios ocultos.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e4q4" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q4" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q4" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q4" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q4" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+          <div class="likert-item" data-id="e4q5">
+            <div class="likert-question">O &oacute;rg&atilde;o j&aacute; adota ou tem plano para adotar tecnologias de apoio &agrave; fiscaliza&ccedil;&atilde;o (BIM, drones, aplicativos de campo, di&aacute;rio digital).
+              <em>Tecnologia reduz o risco de erros e facilita a rastreabilidade para órgãos de controle.</em>
+            </div>
+            <div class="likert-scale">
+              <label class="likert-opt"><input type="radio" name="e4q5" value="1"><div class="likert-dot">1</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q5" value="2"><div class="likert-dot">2</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q5" value="3"><div class="likert-dot">3</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q5" value="4"><div class="likert-dot">4</div></label>
+              <label class="likert-opt"><input type="radio" name="e4q5" value="5"><div class="likert-dot">5</div></label>
+            </div>
+            <div class="likert-labels"><span>Nunca</span><span>Sempre</span></div>
+          </div>
+
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-ghost" onclick="goPage(4)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary btn-lg" onclick="gerarPrompt()" style="gap:9px">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Gerar diagn&oacute;stico
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section-form -->
+
+  <!-- SECTION PROMPT -->
+  <div id="section-prompt" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:var(--text)">Prompt pronto</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Selecione a IA, copie o prompt e gere o diagn&oacute;stico</div>
+      </div>
+      <button class="btn btn-ghost" onclick="voltarForm()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Editar respostas
+      </button>
+    </div>
+
+    <!-- PAINEL DE SCORES -->
+    <div class="score-panel" id="score-panel"></div>
+
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">1. Selecione a IA que vai gerar o diagn&oacute;stico</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ai-sel-btn" id="ai-btn-gpt" onclick="selAI('gpt',this)">
+          <svg width="15" height="15" viewBox="0 0 41 41" fill="none"><path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.842-3.443 10.079 10.079 0 00-9.61 6.956 9.967 9.967 0 00-6.67 4.744 10.081 10.081 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.843 3.343 10.079 10.079 0 009.608-6.999 9.967 9.967 0 006.671-4.744 10.079 10.079 0 00-1.24-11.816zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103l-8.051 4.649a7.504 7.504 0 01-10.24-2.744zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.05-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.499v4.998l-4.331 2.5-4.331-2.5V18z" fill="#111"/></svg>
+          ChatGPT
+        </button>
+        <button class="ai-sel-btn" id="ai-btn-claude" onclick="selAI('claude',this)" style="color:#C96442">
+          <svg width="15" height="15" viewBox="0 0 100 100"><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(45 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(135 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(225 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(315 50 50)"/></svg>
+          Claude
+        </button>
+        <button class="ai-sel-btn" id="ai-btn-gemini" onclick="selAI('gemini',this)" style="color:#1C7DEB">
+          <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gm-r" cx="50%" cy="0%" r="75%"><stop offset="0%" stop-color="#EA4335"/><stop offset="100%" stop-color="#EA4335" stop-opacity="0"/></radialGradient><radialGradient id="gm-b" cx="100%" cy="50%" r="75%"><stop offset="0%" stop-color="#4285F4"/><stop offset="100%" stop-color="#4285F4" stop-opacity="0"/></radialGradient><radialGradient id="gm-g" cx="50%" cy="100%" r="75%"><stop offset="0%" stop-color="#34A853"/><stop offset="100%" stop-color="#34A853" stop-opacity="0"/></radialGradient><radialGradient id="gm-y" cx="0%" cy="50%" r="75%"><stop offset="0%" stop-color="#FBBC04"/><stop offset="100%" stop-color="#FBBC04" stop-opacity="0"/></radialGradient></defs><path d="M50 2C50 2 45 28 33 41C21 54 2 50 2 50C2 50 28 46 41 59C54 72 50 98 50 98C50 98 55 72 67 59C80 46 98 50 98 50C98 50 72 54 59 41C46 28 50 2 50 2Z"/><path d="M50 2C50 2 45 28 33 41C21 54 2 50 2 50C2 50 28 46 41 59C54 72 50 98 50 98C50 98 55 72 67 59C80 46 98 50 98 50C98 50 72 54 59 41C46 28 50 2 50 2Z" fill="url(#gm-r)"/><path d="M50 2C50 2 45 28 33 41C21 54 2 50 2 50C2 50 28 46 41 59C54 72 50 98 50 98C50 98 55 72 67 59C80 46 98 50 98 50C98 50 72 54 59 41C46 28 50 2 50 2Z" fill="url(#gm-b)"/><path d="M50 2C50 2 45 28 33 41C21 54 2 50 2 50C2 50 28 46 41 59C54 72 50 98 50 98C50 98 55 72 67 59C80 46 98 50 98 50C98 50 72 54 59 41C46 28 50 2 50 2Z" fill="url(#gm-g)"/><path d="M50 2C50 2 45 28 33 41C21 54 2 50 2 50C2 50 28 46 41 59C54 72 50 98 50 98C50 98 55 72 67 59C80 46 98 50 98 50C98 50 72 54 59 41C46 28 50 2 50 2Z" fill="url(#gm-y)"/></svg>
+          Gemini
+        </button>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">2. Como funciona</div>
+      <div class="pstep" style="margin-bottom:8px">
+        <div class="pstep-num">1</div>
+        <div class="pstep-text">Clique em <strong>"Copiar prompt e abrir IA"</strong>. O prompt &eacute; copiado automaticamente. Quando a IA abrir, cole com <strong>Ctrl+V</strong> (ou ⌘V no Mac).</div>
+      </div>
+      <div class="pstep" style="margin-bottom:8px">
+        <div class="pstep-num">2</div>
+        <div class="pstep-text">Aguarde o diagn&oacute;stico completo. Se a IA parar antes, pe&ccedil;a <strong>"continue"</strong>. O resultado deve conter an&aacute;lise por eixo e recomenda&ccedil;&otilde;es priorizadas.</div>
+      </div>
+      <div class="pstep">
+        <div class="pstep-num">3</div>
+        <div class="pstep-text">Copie o resultado e cole no campo abaixo para gerar o relat&oacute;rio formatado, com painel de maturidade e plano de a&ccedil;&atilde;o.</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:22px">
+      <button class="btn btn-primary btn-lg" id="btn-copiar-abrir" onclick="copiarAbrirIA()" style="width:100%;justify-content:center;font-size:15px;padding:15px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar prompt e abrir IA
+      </button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted-light);margin-top:8px" id="ai-sel-hint">Selecione uma IA acima para continuar</div>
+    </div>
+
+    <div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Prompt gerado</div>
+        <button onclick="copiarAbrirIA()" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;background:var(--blue);color:#fff;border:none;border-radius:4px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif" onmouseover="this.style.background='#1245B8'" onmouseout="this.style.background='var(--blue)'">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copiar e abrir
+        </button>
+      </div>
+      <pre id="prompt-box"></pre>
+    </div>
+
+    <div class="card" style="border-color:var(--green);background:var(--green-bg)">
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="width:34px;height:34px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13.5px;font-weight:700;color:var(--green);margin-bottom:4px">Cole o resultado do diagn&oacute;stico aqui</div>
+          <div style="font-size:12.5px;color:#1a5c3a;margin-bottom:11px;line-height:1.55">Ap&oacute;s a IA gerar o diagn&oacute;stico, copie todo o texto e cole abaixo. A ferramenta formata com layout profissional, painel de maturidade por eixo e plano de a&ccedil;&atilde;o priorizado.</div>
+          <textarea id="diag-paste" rows="5" placeholder="Cole aqui o texto gerado pela IA…" style="background:#fff;border-color:#a8d8be"></textarea>
+          <div style="margin-top:9px;display:flex;justify-content:flex-end">
+            <button class="btn btn-green" onclick="formatarDiagnostico()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Colar e formatar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box" style="flex-direction:column;align-items:stretch;gap:10px">
+      <h3>Quer elevar a maturidade do seu &oacute;rg&atilde;o? Ent&atilde;o conhe&ccedil;a a Or&ccedil;aFascio!</h3>
+      <p style="margin:0">L&iacute;der em gest&atilde;o de obras no Brasil, a Or&ccedil;aFascio tem ferramentas para or&ccedil;amento, medi&ccedil;&atilde;o, planejamento, BIM e muito mais. Teste gr&aacute;tis durante 7 dias (sem cart&atilde;o!).</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+        <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="Or&ccedil;aFascio" style="height:22px;opacity:.65;filter:brightness(0) invert(1)" onerror="this.style.display='none'">
+        <a href="https://app.orcafascio.com/usuarios/new/?_gl=1*1lrxv8f*_gcl_aw*R0NMLjE3NzgxNzgzMTIuQ2owS0NRanc4UERQQmhDZUFSSXNBT0p3bVdWaVNhSWNBMGd1V3REWE9Odjk2Q0ZxV051RjJDQVowN3lzeHJFZ2UtSW9BY19hZU82UEZFRWFBa3FNRUFMd193Y0I.*_gcl_au*MTA1ODg4ODExNS4xNzgwOTE1NTgx" target="_blank" class="btn btn-white">Quero experimentar!</a>
+      </div>
+    </div>
+  </div><!-- /section-prompt -->
+
+  <!-- SECTION RESULT -->
+  <div id="section-result" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:var(--text)">Relat&oacute;rio de diagn&oacute;stico</div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:2px" id="result-sub"></div>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn btn-ghost" onclick="voltarPrompt()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Voltar
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="editor-toolbar">
+        <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px">Editar:</span>
+        <button class="tb-btn" onclick="fmt('bold')" title="Negrito"><b>N</b></button>
+        <button class="tb-btn" onclick="fmt('italic')" title="It&aacute;lico"><i>I</i></button>
+        <button class="tb-btn" onclick="fmt('underline')" title="Sublinhado"><u>S</u></button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmtBlock('h2')">H2</button>
+        <button class="tb-btn" onclick="fmtBlock('h3')">H3</button>
+        <button class="tb-btn" onclick="fmtBlock('p')">&#182;</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmt('insertUnorderedList')">&#8801;</button>
+        <button class="tb-btn" onclick="fmt('insertOrderedList')">1.</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="document.execCommand('undo')">&#8617;</button>
+        <button class="tb-btn" onclick="document.execCommand('redo')">&#8618;</button>
+      </div>
+      <div class="result-doc" id="doc-content" contenteditable="true" spellcheck="true"></div>
+    </div>
+
+    <div class="dl-bar">
+      <span class="dl-label">Download:</span>
+      <button class="btn-dl" onclick="salvarHTML()" style="background:rgba(27,140,90,.35);border-color:rgba(27,140,90,.6)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar (.html)
+      </button>
+      <button class="btn-dl" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        PDF / Imprimir
+      </button>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;margin-left:auto">Para PDF: "Imprimir &rarr; Salvar como PDF" no browser</span>
+    </div>
+
+    <div class="cta-box" style="flex-direction:column;align-items:stretch;gap:10px">
+      <h3>Quer elevar a maturidade do seu &oacute;rg&atilde;o? Ent&atilde;o conhe&ccedil;a a Or&ccedil;aFascio!</h3>
+      <p style="margin:0">L&iacute;der em gest&atilde;o de obras no Brasil, a Or&ccedil;aFascio tem ferramentas para or&ccedil;amento, medi&ccedil;&atilde;o, planejamento, BIM e muito mais. Teste gr&aacute;tis durante 7 dias (sem cart&atilde;o!).</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+        <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="Or&ccedil;aFascio" style="height:22px;opacity:.65;filter:brightness(0) invert(1)" onerror="this.style.display='none'">
+        <a href="https://app.orcafascio.com/usuarios/new/?_gl=1*1lrxv8f*_gcl_aw*R0NMLjE3NzgxNzgzMTIuQ2owS0NRanc4UERQQmhDZUFSSXNBT0p3bVdWaVNhSWNBMGd1V3REWE9Odjk2Q0ZxV051RjJDQVowN3lzeHJFZ2UtSW9BY19hZU82UEZFRWFBa3FNRUFMd193Y0I.*_gcl_au*MTA1ODg4ODExNS4xNzgwOTE1NTgx" target="_blank" class="btn btn-white">Quero experimentar!</a>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:14px">
+      <button class="btn btn-ghost" onclick="resetForm()" style="font-size:12.5px;color:var(--muted-light)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.63"/></svg>
+        Novo diagn&oacute;stico
+      </button>
+    </div>
+  </div><!-- /section-result -->
+
+</div><!-- /container -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentPage = 1;
+let maxStepReached = 1;
+let promptGerado = '';
+let selectedAI = null;
+
+const AI_URLS = {
+  gpt: 'https://chatgpt.com/',
+  claude: 'https://claude.ai/new',
+  gemini: 'https://gemini.google.com/app',
+};
+
+// ─── SCORES ───────────────────────────────────────────────────────────────────
+const EIXOS = [
+  { id: 'e1', label: 'Padronização de editais', questoes: ['e1q1','e1q2','e1q3','e1q4'] },
+  { id: 'e2', label: 'Banco de composições', questoes: ['e2q1','e2q2','e2q3','e2q4'] },
+  { id: 'e3', label: 'Fluxo de aprovação', questoes: ['e3q1','e3q2','e3q3','e3q4'] },
+  { id: 'e4', label: 'Medição e fiscalização', questoes: ['e4q1','e4q2','e4q3','e4q4','e4q5'] },
+];
+
+function getVal(name) {
+  const el = document.querySelector('input[name="'+name+'"]:checked');
+  return el ? parseInt(el.value) : 0;
+}
+
+function calcScore(eixo) {
+  const vals = eixo.questoes.map(q => getVal(q)).filter(v => v > 0);
+  if (!vals.length) return null;
+  return Math.round((vals.reduce((a,b) => a+b, 0) / vals.length) * 10) / 10;
+}
+
+function scoreGlobal() {
+  const scores = EIXOS.map(e => calcScore(e)).filter(s => s !== null);
+  if (!scores.length) return null;
+  return Math.round((scores.reduce((a,b) => a+b, 0) / scores.length) * 10) / 10;
+}
+
+function nivelInfo(score) {
+  if (score === null) return { label: '—', cls: '', cor: '#aaa', pct: 0 };
+  if (score <= 2) return { label: 'Inicial', cls: 'nivel-inicial', cor: '#E53935', pct: (score/5)*100 };
+  if (score <= 3) return { label: 'Básico', cls: 'nivel-basico', cor: '#E67E22', pct: (score/5)*100 };
+  if (score <= 4) return { label: 'Intermediário', cls: 'nivel-intermediario', cor: '#D4A017', pct: (score/5)*100 };
+  return { label: 'Avançado', cls: 'nivel-avancado', cor: '#1B8C5A', pct: (score/5)*100 };
+}
+
+function renderScorePanel() {
+  const panel = document.getElementById('score-panel');
+  if (!panel) return;
+  let html = '';
+  EIXOS.forEach(e => {
+    const s = calcScore(e);
+    const n = nivelInfo(s);
+    html += '<div class="score-card">';
+    html += '<div class="score-card-label">'+e.label+'</div>';
+    html += '<div class="score-card-val" style="color:'+n.cor+'">'+(s !== null ? s.toFixed(1) : '—')+'<span style="font-size:14px;font-weight:500;color:var(--muted)">/5</span></div>';
+    html += '<div class="score-bar"><div class="score-bar-fill" style="width:'+n.pct+'%;background:'+n.cor+'"></div></div>';
+    html += '<div class="score-nivel '+n.cls+'">'+n.label+'</div>';
+    html += '</div>';
+  });
+  // Score global
+  const sg = scoreGlobal();
+  const ng = nivelInfo(sg);
+  html += '<div class="score-card" style="border-color:var(--blue-mid);background:var(--blue-pale);grid-column:1/-1">';
+  html += '<div class="score-card-label">Score global de maturidade</div>';
+  html += '<div class="score-card-val" style="color:'+ng.cor+';font-size:32px">'+(sg !== null ? sg.toFixed(1) : '—')+'<span style="font-size:16px;font-weight:500;color:var(--muted)">/5</span></div>';
+  html += '<div class="score-bar" style="height:8px"><div class="score-bar-fill" style="width:'+ng.pct+'%;background:'+ng.cor+'"></div></div>';
+  html += '<div class="score-nivel '+ng.cls+'" style="font-size:13px;font-weight:700">'+ng.label+'</div>';
+  html += '</div>';
+  panel.innerHTML = html;
+}
+
+// ─── NAVEGACAO ────────────────────────────────────────────────────────────────
+function showToast(msg, dur) {
+  dur = dur || 3000;
+  var t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, dur);
+}
+
+function setStep(n) {
+  for (var i = 1; i <= 7; i++) {
+    var el = document.getElementById('step-' + i);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (i < n) el.classList.add('done');
+    else if (i === n) el.classList.add('active');
+  }
+}
+
+function validatePage(n) {
+  if (n === 1) {
+    if (!document.getElementById('nome-orgao').value.trim()) {
+      showToast('Informe o nome do órgão.');
+      return false;
+    }
+    if (!document.getElementById('esfera').value) {
+      showToast('Selecione a esfera administrativa.');
+      return false;
+    }
+    var cargoVal = document.getElementById('cargo').value;
+    if (!cargoVal) {
+      showToast('Selecione o cargo / função.');
+      return false;
+    }
+    if (cargoVal === 'Outro' && !document.getElementById('cargo-outro').value.trim()) {
+      showToast('Informe o cargo no campo "Outro".');
+      return false;
+    }
+  }
+  if (n === 2) {
+    var allAnswered = EIXOS[0].questoes.every(q => getVal(q) > 0);
+    if (!allAnswered) {
+      showToast('Responda todas as perguntas do Eixo 1.');
+      return false;
+    }
+  }
+  if (n === 3) {
+    var allAnswered = EIXOS[1].questoes.every(q => getVal(q) > 0);
+    if (!allAnswered) {
+      showToast('Responda todas as perguntas do Eixo 2.');
+      return false;
+    }
+  }
+  if (n === 4) {
+    var allAnswered = EIXOS[2].questoes.every(q => getVal(q) > 0);
+    if (!allAnswered) {
+      showToast('Responda todas as perguntas do Eixo 3.');
+      return false;
+    }
+  }
+  if (n === 5) {
+    var allAnswered = EIXOS[3].questoes.every(q => getVal(q) > 0);
+    if (!allAnswered) {
+      showToast('Responda todas as perguntas do Eixo 4.');
+      return false;
+    }
+  }
+  return true;
+}
+
+function goPage(n) {
+  if (n > currentPage && !validatePage(currentPage)) return;
+  document.getElementById('page-' + currentPage).style.display = 'none';
+  currentPage = n;
+  document.getElementById('page-' + n).style.display = 'block';
+  if (n > maxStepReached) maxStepReached = n;
+  setStep(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function voltarForm() {
+  document.getElementById('section-prompt').style.display = 'none';
+  document.getElementById('section-result').style.display = 'none';
+  document.getElementById('section-form').style.display = 'block';
+  document.getElementById('steps-bar').style.display = 'flex';
+  for (var i = 1; i <= 5; i++) {
+    document.getElementById('page-' + i).style.display = i === currentPage ? 'block' : 'none';
+  }
+  setStep(currentPage);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function voltarPrompt() {
+  document.getElementById('section-result').style.display = 'none';
+  document.getElementById('section-prompt').style.display = 'block';
+  setStep(6);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  if (!confirm('Isso vai limpar todas as respostas. Continuar?')) return;
+  location.reload();
+}
+
+// ─── GERAR PROMPT ─────────────────────────────────────────────────────────────
+function gerarPrompt() {
+  if (!validatePage(5)) return;
+
+  var orgao    = document.getElementById('nome-orgao').value.trim();
+  var esfera   = document.getElementById('esfera').value;
+  var cargoSel = document.getElementById('cargo').value;
+  var cargo    = cargoSel === 'Outro'
+    ? (document.getElementById('cargo-outro').value.trim() || 'Outro')
+    : cargoSel;
+  var volume   = document.getElementById('volume-contratos').value || 'não informado';
+  var valor    = document.getElementById('valor-anual').value || 'não informado';
+  var auditoria = document.getElementById('auditoria').value || 'não informado';
+  var desafio  = document.getElementById('desafio').value.trim() || 'não informado';
+
+  // Montar respostas por eixo
+  var eixoTextos = [
+    { nome: 'Eixo 1 — Padronização de editais', questoes: [
+      { texto: 'Modelos padronizados de edital aprovados internamente', val: getVal('e1q1') },
+      { texto: 'Planilha orçamentária com composições referenciadas em SINAPI/tabela oficial', val: getVal('e1q2') },
+      { texto: 'Especificação clara de regime, critério de julgamento e habilitação', val: getVal('e1q3') },
+      { texto: 'Revisão jurídica e técnica com registro formal antes da publicação', val: getVal('e1q4') },
+    ]},
+    { nome: 'Eixo 2 — Banco de composições e orçamento', questoes: [
+      { texto: 'Banco interno de composições de custo unitário atualizado', val: getVal('e2q1') },
+      { texto: 'Orçamentos com referência SINAPI/SICRO, desoneração declarada e BDI justificado', val: getVal('e2q2') },
+      { texto: 'Uso de curva ABC para priorizar análise de preços', val: getVal('e2q3') },
+      { texto: 'Itens novos cotados com mínimo 3 fornecedores e documentados', val: getVal('e2q4') },
+    ]},
+    { nome: 'Eixo 3 — Fluxo de aprovação e rastreabilidade', questoes: [
+      { texto: 'Fluxo formal de aprovação de contratos e aditivos com alçadas definidas', val: getVal('e3q1') },
+      { texto: 'Aditivos com justificativa técnica formal e revisão da planilha', val: getVal('e3q2') },
+      { texto: 'Fiscais designados por portaria com capacitação comprovada', val: getVal('e3q3') },
+      { texto: 'Sistema de gestão de contratos (ERP, plataforma gov. ou software específico)', val: getVal('e3q4') },
+    ]},
+    { nome: 'Eixo 4 — Medição e fiscalização de obras', questoes: [
+      { texto: 'Medições in loco com registro fotográfico datado e boletim assinado', val: getVal('e4q1') },
+      { texto: 'Diário de obra atualizado com registros diários', val: getVal('e4q2') },
+      { texto: 'Confrontação com cronograma físico-financeiro e parecer formal em desvios', val: getVal('e4q3') },
+      { texto: 'Recebimento formal de obra (provisório e definitivo) com vistoria documentada', val: getVal('e4q4') },
+      { texto: 'Adoção ou plano para tecnologias de fiscalização (BIM, drones, diário digital)', val: getVal('e4q5') },
+    ]},
+  ];
+
+  var respostasStr = '';
+  eixoTextos.forEach(function(e) {
+    respostasStr += e.nome + '\n';
+    e.questoes.forEach(function(q) {
+      respostasStr += '  - ' + q.texto + ': ' + q.val + '/5\n';
+    });
+    respostasStr += '\n';
+  });
+
+  var sg = scoreGlobal();
+  var nivelGlobal = sg !== null ? nivelInfo(sg).label : 'não calculado';
+
+  var prompt = 'Você é um especialista em gestão pública de obras, auditoria governamental e conformidade com a Lei 14.133/2021 (Nova Lei de Licitações). Analise o diagnóstico de maturidade abaixo e gere um relatório técnico completo em português.\n\n';
+  prompt += '=== DADOS DO ÓRGÃO ===\n';
+  prompt += 'Órgão: ' + orgao + '\n';
+  prompt += 'Esfera: ' + esfera + '\n';
+  prompt += 'Cargo do respondente: ' + cargo + '\n';
+  prompt += 'Volume de contratos: ' + volume + '\n';
+  prompt += 'Valor anual em obras: ' + valor + '\n';
+  prompt += 'Histórico de auditoria: ' + auditoria + '\n';
+  prompt += 'Principal desafio declarado: ' + desafio + '\n\n';
+  prompt += '=== RESPOSTAS DO DIAGNÓSTICO (escala 1 a 5) ===\n';
+  prompt += respostasStr;
+  prompt += 'Score global estimado: ' + (sg !== null ? sg.toFixed(1) + '/5' : 'pendente') + ' — Nível: ' + nivelGlobal + '\n\n';
+  prompt += '=== INSTRUÇÕES PARA O RELATÓRIO ===\n';
+  prompt += 'Gere um relatório com as seguintes seções:\n\n';
+  prompt += '1. SUMÁRIO EXECUTIVO (3-4 parágrafos resumindo o nível de maturidade, principais pontos críticos e urgência de ação)\n\n';
+  prompt += '2. ANÁLISE POR EIXO (para cada um dos 4 eixos):\n';
+  prompt += '   - Nível de maturidade atual (Inicial / Básico / Intermediário / Avançado)\n';
+  prompt += '   - Pontos fortes identificados (se houver)\n';
+  prompt += '   - Lacunas e riscos específicos (cite referências legais: art. da Lei 14.133, Acórdãos TCU, IN, etc.)\n';
+  prompt += '   - 3 recomendações práticas e priorizadas (curto, médio e longo prazo)\n\n';
+  prompt += '3. PLANO DE AÇÃO PRIORITÁRIO (tabela ou lista com: Ação | Eixo | Prazo | Responsável sugerido | Impacto esperado)\n';
+  prompt += '   Priorize as ações de maior risco legal e de exposição ao TCU/CGU.\n\n';
+  prompt += '4. ALERTAS DE CONFORMIDADE (lista de itens com alto risco de questionamento em auditoria com base nas respostas com nota 1 ou 2)\n\n';
+  prompt += '5. OPORTUNIDADE DE EVOLUÇÃO (como a adoção de tecnologia e boas práticas pode acelerar a maturidade)\n\n';
+  prompt += 'Use linguagem técnica acessível. Seja direto, prático e objetivo. Evite generalidades: use as respostas concretas do diagnóstico.';
+
+  promptGerado = prompt;
+  document.getElementById('prompt-box').textContent = prompt;
+
+  // Mostrar secao prompt
+  document.getElementById('section-form').style.display = 'none';
+  document.getElementById('section-prompt').style.display = 'block';
+  document.getElementById('steps-bar').style.display = 'flex';
+  maxStepReached = 6;
+  setStep(6);
+
+  renderScorePanel();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── AI SELECTOR ──────────────────────────────────────────────────────────────
+function selAI(id, btn) {
+  selectedAI = id;
+  document.querySelectorAll('.ai-sel-btn').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  var hint = document.getElementById('ai-sel-hint');
+  var nomes = { gpt: 'ChatGPT', claude: 'Claude', gemini: 'Gemini' };
+  if (hint) {
+    hint.textContent = 'Pronto! Vai abrir ' + (nomes[id] || id) + ' em nova aba';
+    hint.style.color = 'var(--green)';
+  }
+}
+
+function copiarAbrirIA() {
+  if (!promptGerado) { showToast('Monte o prompt primeiro.'); return; }
+  if (!selectedAI) { showToast('Selecione uma IA antes de continuar.'); return; }
+
+  function abrirIA() {
+    window.open(AI_URLS[selectedAI], '_blank');
+    showToast('Prompt copiado! Cole com Ctrl+V na IA.', 4000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(promptGerado).then(abrirIA).catch(function() {
+      var ta = document.createElement('textarea');
+      ta.value = promptGerado;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      abrirIA();
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = promptGerado;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    abrirIA();
+  }
+}
+
+// ─── FORMATAR DIAGNOSTICO ─────────────────────────────────────────────────────
+function formatarDiagnostico() {
+  var texto = document.getElementById('diag-paste').value.trim();
+  if (!texto) { showToast('Cole o resultado da IA antes de formatar.'); return; }
+
+  var orgao = document.getElementById('nome-orgao').value.trim();
+  var esfera = document.getElementById('esfera').value;
+  var cargo = document.getElementById('cargo').value;
+  var sg = scoreGlobal();
+  var ni = sg !== null ? nivelInfo(sg) : { label: '—', cor: '#aaa' };
+
+  // Cabecalho do relatorio
+  var dataHoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  // Montar scores em HTML
+  var scoresHtml = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0">';
+  EIXOS.forEach(function(e) {
+    var s = calcScore(e);
+    var n = nivelInfo(s);
+    scoresHtml += '<div style="border:1.5px solid #DDE4FF;border-radius:8px;padding:12px 14px;background:#fff">';
+    scoresHtml += '<div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#6B7BAA;margin-bottom:5px">'+e.label+'</div>';
+    scoresHtml += '<div style="font-size:22px;font-weight:800;color:'+n.cor+'">'+(s !== null ? s.toFixed(1) : '—')+'<span style="font-size:12px;color:#9CAAD4">/5</span></div>';
+    scoresHtml += '<div style="height:5px;border-radius:3px;background:#DDE4FF;margin-top:6px"><div style="height:100%;border-radius:3px;background:'+n.cor+';width:'+n.pct+'%"></div></div>';
+    scoresHtml += '<div style="font-size:11px;font-weight:600;color:'+n.cor+';margin-top:4px">'+n.label+'</div>';
+    scoresHtml += '</div>';
+  });
+  // Score global
+  scoresHtml += '<div style="border:1.5px solid #1560F5;border-radius:8px;padding:12px 14px;background:#F5F8FF;grid-column:1/-1">';
+  scoresHtml += '<div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#6B7BAA;margin-bottom:5px">Score global de maturidade</div>';
+  scoresHtml += '<div style="font-size:28px;font-weight:800;color:'+ni.cor+'">'+(sg !== null ? sg.toFixed(1) : '—')+'<span style="font-size:13px;color:#9CAAD4">/5 &mdash; '+ni.label+'</span></div>';
+  scoresHtml += '<div style="height:7px;border-radius:4px;background:#DDE4FF;margin-top:8px"><div style="height:100%;border-radius:4px;background:'+ni.cor+';width:'+(sg!==null?(sg/5*100).toFixed(0):0)+'%"></div></div>';
+  scoresHtml += '</div>';
+  scoresHtml += '</div>';
+
+  // Converter markdown simples em HTML
+  var linhas = texto.split('\n');
+  var htmlLinhas = [];
+  linhas.forEach(function(linha) {
+    var l = linha.trim();
+    if (!l) { htmlLinhas.push('<br>'); return; }
+    // Headings
+    if (l.startsWith('### ')) { htmlLinhas.push('<h3>'+l.slice(4)+'</h3>'); return; }
+    if (l.startsWith('## ')) { htmlLinhas.push('<h2>'+l.slice(3)+'</h2>'); return; }
+    if (l.startsWith('# ')) { htmlLinhas.push('<h2>'+l.slice(2)+'</h2>'); return; }
+    // Listas
+    if (l.startsWith('- ') || l.startsWith('* ')) {
+      htmlLinhas.push('<li>'+l.slice(2).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')+'</li>');
+      return;
+    }
+    if (/^\d+\.\s/.test(l)) {
+      htmlLinhas.push('<li>'+l.replace(/^\d+\.\s/,'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')+'</li>');
+      return;
+    }
+    // Bold inline
+    l = l.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+    htmlLinhas.push('<p>'+l+'</p>');
+  });
+
+  var conteudo = htmlLinhas.join('\n');
+
+  var htmlFinal = '<h1 style="font-size:20px;font-weight:800;color:#0A1A5C;margin-bottom:4px">Diagn&oacute;stico de maturidade or&ccedil;ament&aacute;ria para &oacute;rg&atilde;os p&uacute;blicos</h1>';
+  htmlFinal += '<p style="font-size:12px;color:#6B7BAA;margin-bottom:2px"><strong>'+orgao+'</strong> &mdash; '+esfera+'</p>';
+  htmlFinal += '<p style="font-size:12px;color:#6B7BAA;margin-bottom:2px">Respondido por: '+cargo+' &bull; '+dataHoje+'</p>';
+  htmlFinal += '<hr style="border:none;border-top:2px solid #DDE4FF;margin:14px 0">';
+  htmlFinal += '<h2 style="font-size:14px;font-weight:700;color:#0A1A5C;margin-bottom:10px;border-bottom:2px solid #DDE4FF;padding-bottom:5px">Painel de maturidade</h2>';
+  htmlFinal += scoresHtml;
+  htmlFinal += '<hr style="border:none;border-top:2px solid #DDE4FF;margin:18px 0">';
+  htmlFinal += conteudo;
+
+  document.getElementById('doc-content').innerHTML = htmlFinal;
+  document.getElementById('result-sub').textContent = orgao + ' — ' + dataHoje;
+
+  document.getElementById('section-prompt').style.display = 'none';
+  document.getElementById('section-result').style.display = 'block';
+  maxStepReached = 7;
+  setStep(7);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── EDITOR ───────────────────────────────────────────────────────────────────
+function fmt(cmd) { document.execCommand(cmd, false, null); }
+function fmtBlock(tag) { document.execCommand('formatBlock', false, tag); }
+
+// ─── SALVAR HTML ──────────────────────────────────────────────────────────────
+function salvarHTML() {
+  var doc = document.getElementById('doc-content').innerHTML;
+  var orgao = document.getElementById('nome-orgao').value.trim() || 'orgao';
+  var slug = orgao.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g,'').slice(0,40);
+  var html = '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+  html += '<title>Diagnostico de maturidade orcamentaria — '+orgao+'</title>';
+  html += '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">';
+  html += '<style>body{font-family:"Inter",sans-serif;max-width:860px;margin:40px auto;padding:20px 32px;color:#0D1B4B;line-height:1.7}';
+  html += 'h1{font-size:22px;font-weight:800;margin-bottom:4px}h2{font-size:16px;font-weight:700;color:#0A1A5C;margin-top:28px;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #DDE4FF}';
+  html += 'h3{font-size:14px;font-weight:700;margin-top:16px}p{margin-bottom:10px}ul,ol{margin:8px 0 12px 20px}li{margin-bottom:5px}';
+  html += 'hr{border:none;border-top:2px solid #DDE4FF;margin:18px 0}';
+  html += '@media print{body{margin:20px;padding:0}}';
+  html += '</style></head><body>';
+  html += doc;
+  html += '</body></html>';
+  var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'diagnostico-' + slug + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Relatorio salvo como HTML!');
+}
+
+// ─── CARGO OUTRO ──────────────────────────────────────────────────────────────
+function toggleCargoOutro(val) {
+  var el = document.getElementById('cargo-outro');
+  if (val === 'Outro') {
+    el.style.display = 'block';
+    el.focus();
+  } else {
+    el.style.display = 'none';
+    el.value = '';
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  setStep(1);
+});
+</script>
+</body>
+</html>
