@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist inteligente de edital — OrçaFascio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="header">
+  <img class="header-logo" src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio" onerror="this.outerHTML='<div style=\'display:flex;align-items:center;gap:10px;position:relative;z-index:1\'><svg width=\'44\' height=\'44\' viewBox=\'0 0 48 48\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><polyline points=\'16,11 7,24 16,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><polyline points=\'32,11 41,24 32,37\' stroke=\'white\' stroke-width=\'3.8\' stroke-linecap=\'square\' stroke-linejoin=\'miter\' fill=\'none\'/><rect x=\'19.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'24\' y=\'11\' width=\'3\' height=\'21\' fill=\'white\'/><rect x=\'28.5\' y=\'14\' width=\'3\' height=\'15\' fill=\'white\'/><rect x=\'19.5\' y=\'32\' width=\'12\' height=\'2.8\' fill=\'white\'/></svg><span style=\'font-size:22px;font-weight:800;color:#fff;letter-spacing:.1em;text-transform:uppercase\'>OrçaFascio</span></div>'">
+  <div class="header-badge">Ferramenta gratuita</div>
+  <div class="header-title">Checklist inteligente de edital</div>
+  <div class="header-sub">Pare de analisar edital no olho. Selecione as características da licitação, gere o prompt e monte um checklist técnico em minutos.</div>
+</div>
+<div class="container">
+  <div class="save-bar" id="save-bar">
+    <label class="btn-save btn-save-primary" style="cursor:pointer">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Importar checklist
+      <input type="file" accept=".html" style="display:none" onchange="importarHTML(this)">
+    </label>
+    <span style="font-size:11px;color:var(--muted-light);margin-left:6px">Apenas checklists gerados anteriormente nesta ferramenta, em formato <strong>.html</strong></span>
+  </div>
+  <div class="steps" id="steps-bar">
+    <div class="step active" id="step-1"><div class="step-num">1</div><div class="step-label">Licitação</div></div>
+    <div class="step" id="step-2"><div class="step-num">2</div><div class="step-label">Edital</div></div>
+    <div class="step" id="step-3"><div class="step-num">3</div><div class="step-label">Análise</div></div>
+    <div class="step" id="step-4"><div class="step-num">4</div><div class="step-label">Prompt</div></div>
+    <div class="step" id="step-5"><div class="step-num">5</div><div class="step-label">Checklist</div></div>
+  </div>
+  <div id="section-form">
+    <div id="page-1">
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 13l-7.5 7.5a2.12 2.12 0 01-3-3L11 10"/><path d="M9 7l4 4"/><path d="M14.5 5.5l4 4"/><path d="M13 2l9 9"/><path d="M2 22h8"/></svg></div><div><div class="card-title">Identificação da licitação</div><div class="card-desc">Modalidade, critério, regime e objeto do certame</div></div></div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Modalidade de licitação <span>*</span></label>
+              <select id="modalidade" onchange="toggleOutro('modalidade')"><option value="" disabled selected>Selecione…</option>
+<option value="Pregão eletrônico">Pregão eletrônico</option>
+<option value="Pregão presencial">Pregão presencial</option>
+<option value="Concorrência">Concorrência</option>
+<option value="Concurso">Concurso</option>
+<option value="Leilão">Leilão</option>
+<option value="Diálogo competitivo">Diálogo competitivo</option>
+<option value="Credenciamento">Credenciamento</option>
+<option value="Dispensa eletrônica">Dispensa eletrônica</option>
+<option value="Inexigibilidade">Inexigibilidade</option>
+<option value="_outro">Outro (especificar)…</option></select>
+              <div id="modalidade-outro-wrap" style="display:none"><input type="text" id="modalidade-outro" placeholder="Informe a modalidade"></div>
+            </div>
+            <div class="field">
+              <label class="field-label">Critério de julgamento</label>
+              <select id="criterio" onchange="toggleOutro('criterio')"><option value="" disabled selected>Selecione…</option>
+<option value="Menor preço">Menor preço</option>
+<option value="Maior desconto">Maior desconto</option>
+<option value="Melhor técnica ou conteúdo artístico">Melhor técnica ou conteúdo artístico</option>
+<option value="Técnica e preço">Técnica e preço</option>
+<option value="Maior lance">Maior lance</option>
+<option value="Maior retorno econômico">Maior retorno econômico</option>
+<option value="_outro">Outro (especificar)…</option></select>
+              <div id="criterio-outro-wrap" style="display:none"><input type="text" id="criterio-outro" placeholder="Informe o critério"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Regime de execução</label>
+            <select id="regime" onchange="toggleOutro('regime')"><option value="" disabled selected>Selecione…</option>
+<option value="Empreitada por preço unitário">Empreitada por preço unitário</option>
+<option value="Empreitada por preço global">Empreitada por preço global</option>
+<option value="Empreitada integral">Empreitada integral</option>
+<option value="Contratação por tarefa">Contratação por tarefa</option>
+<option value="Contratação integrada">Contratação integrada</option>
+<option value="Contratação semi-integrada">Contratação semi-integrada</option>
+<option value="Fornecimento e prestação de serviço associado">Fornecimento e prestação de serviço associado</option>
+<option value="_outro">Outro (especificar)…</option></select>
+            <div id="regime-outro-wrap" style="display:none;margin-top:6px"><input type="text" id="regime-outro" placeholder="Informe o regime"></div>
+          </div>
+          <div class="field">
+            <label class="field-label">Objeto da licitação <span>*</span></label>
+            <div class="field-hint">Tipo de obra ou serviço de engenharia. Use as sugestões ou adicione o seu.</div>
+            <div class="elist-items" id="objeto-items"></div>
+            <div class="elist-add-row"><input type="text" id="objeto-input" placeholder="Ex: Reforma de unidade básica de saúde…"><button class="elist-add-btn" onclick="ea('objeto')">＋</button></div>
+            <div class="suggestions" id="objeto-chips"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="card-title">Dados do edital</div><div class="card-desc">Aparecem no cabeçalho do checklist (opcionais)</div></div></div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field"><label class="field-label">Órgão / entidade</label><input type="text" id="orgao" placeholder="Ex: Prefeitura Municipal de Santo André"></div>
+            <div class="field"><label class="field-label">Edital / processo nº</label><input type="text" id="numero-edital" placeholder="Ex: PE 045/2026"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label class="field-label">Valor estimado</label><input type="text" id="valor" placeholder="R$ 0,00" oninput="mascaraValor(this)"></div>
+            <div class="field"><label class="field-label">Município / UF</label><input type="text" id="municipio" placeholder="Ex: Santo André/SP"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label class="field-label">Data da análise</label><input type="date" id="data-analise"></div>
+            <div class="field"></div>
+          </div>
+        </div>
+        <div class="btn-actions"><button class="btn btn-primary" onclick="goPage(2)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+      </div>
+    </div>
+    <div id="page-2" style="display:none">
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="card-title">Características do edital</div><div class="card-desc">Marque o que o edital exige ou prevê — o checklist se adapta a isso</div></div></div>
+        <div class="field"><div class="check-grid" id="caracteristicas-grid"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="card-title">Pontos sensíveis e prazos</div><div class="card-desc">Itens que merecem atenção redobrada na análise</div></div></div>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label">Pontos sensíveis a verificar</label>
+            <div class="elist-items" id="documentos-items"></div>
+            <div class="elist-add-row"><input type="text" id="documentos-input" placeholder="Ex: Atestado exige quantitativo mínimo elevado…"><button class="elist-add-btn" onclick="ea('documentos')">＋</button></div>
+            <div class="suggestions" id="documentos-chips"></div>
+          </div>
+          <div class="field">
+            <label class="field-label">Prazos críticos</label>
+            <div class="field-hint">Ex: impugnação até 3 dias úteis antes; entrega de proposta em 8 dias úteis.</div>
+            <textarea id="prazos" rows="2" placeholder="Descreva os prazos relevantes do edital…"></textarea>
+          </div>
+        </div>
+        <div class="btn-actions"><button class="btn btn-ghost" onclick="goPage(1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button><button class="btn btn-primary" onclick="goPage(3)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+      </div>
+    </div>
+    <div id="page-3" style="display:none">
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><div><div class="card-title">Foco da análise</div><div class="card-desc">Escolha as áreas que o checklist deve cobrir</div></div></div>
+        <div class="field"><label class="field-label">Áreas de foco <span>*</span></label><div class="check-grid" id="foco-grid"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="card-title">Detalhamento</div><div class="card-desc">Nível do checklist e contexto da equipe</div></div></div>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="field"><label class="field-label">Nível de detalhamento</label>
+              <select id="nivel">
+                <option value="resumido">Resumido — os itens essenciais</option>
+                <option value="padrao" selected>Padrão — equilíbrio entre cobertura e tamanho</option>
+                <option value="detalhado">Detalhado — verificação minuciosa</option>
+              </select>
+            </div>
+            <div class="field"><label class="field-label">Perfil da equipe</label><input type="text" id="perfil" placeholder="Ex: setor de licitações + orçamentista"></div>
+          </div>
+          <div class="field"><label class="field-label">Observações adicionais</label><textarea id="obs" rows="2" placeholder="Qualquer instrução ou contexto extra para o checklist…"></textarea></div>
+        </div>
+        <div class="btn-actions"><button class="btn btn-ghost" onclick="goPage(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+          <button class="btn btn-primary btn-lg" onclick="gerarPrompt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Montar prompt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="section-prompt" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:22px">
+      <div><div style="font-size:17px;font-weight:800;color:var(--text)">Prompt pronto</div><div style="font-size:12.5px;color:var(--muted);margin-top:2px">Selecione a IA, copie o prompt e gere o checklist</div></div>
+      <button class="btn btn-ghost" onclick="voltarForm()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Editar dados</button>
+    </div>
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">1. Selecione a IA que vai gerar o checklist</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ai-sel-btn" id="ai-btn-gpt" onclick="selAI('gpt',this)"><svg width="15" height="15" viewBox="0 0 41 41" fill="none"><path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.842-3.443 10.079 10.079 0 00-9.61 6.956 9.967 9.967 0 00-6.67 4.744 10.081 10.081 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.843 3.343 10.079 10.079 0 009.608-6.999 9.967 9.967 0 006.671-4.744 10.079 10.079 0 00-1.24-11.816zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103l-8.051 4.649a7.504 7.504 0 01-10.24-2.744zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.05-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.499v4.998l-4.331 2.5-4.331-2.5V18z" fill="#111"/></svg> ChatGPT</button>
+        <button class="ai-sel-btn" id="ai-btn-claude" onclick="selAI('claude',this)" style="color:#C96442"><svg width="15" height="15" viewBox="0 0 100 100"><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(45 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(90 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(135 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(180 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(225 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(270 50 50)"/><ellipse cx="50" cy="22" rx="8" ry="19" fill="#C96442" transform="rotate(315 50 50)"/></svg> Claude</button>
+        <button class="ai-sel-btn" id="ai-btn-gemini" onclick="selAI('gemini',this)" style="color:#1C7DEB"><svg width="15" height="15" viewBox="0 0 28 28" fill="none"><defs><clipPath id="gmStar"><path d="M14 0.5C14 0.5 14 10 9 14C4 18 0.5 14 0.5 14C0.5 14 10 14 14 19C18 24 14 27.5 14 27.5C14 27.5 14 18 19 14C24 10 27.5 14 27.5 14C27.5 14 18 14 14 9C10 4 14 0.5 14 0.5Z"/></clipPath><radialGradient id="gmTop" cx="50%" cy="0%" r="80%"><stop offset="0%" stop-color="#EA4335"/><stop offset="100%" stop-color="#EA4335" stop-opacity="0"/></radialGradient><radialGradient id="gmRight" cx="100%" cy="50%" r="80%"><stop offset="0%" stop-color="#4285F4"/><stop offset="100%" stop-color="#4285F4" stop-opacity="0"/></radialGradient><radialGradient id="gmBot" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#34A853"/><stop offset="100%" stop-color="#34A853" stop-opacity="0"/></radialGradient><radialGradient id="gmLeft" cx="0%" cy="50%" r="80%"><stop offset="0%" stop-color="#FBBC05"/><stop offset="100%" stop-color="#FBBC05" stop-opacity="0"/></radialGradient></defs><g clip-path="url(#gmStar)"><rect width="28" height="28" fill="#4285F4"/><rect width="28" height="28" fill="url(#gmTop)"/><rect width="28" height="28" fill="url(#gmRight)"/><rect width="28" height="28" fill="url(#gmBot)"/><rect width="28" height="28" fill="url(#gmLeft)"/></g></svg> Gemini</button>
+      </div>
+    </div>
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">2. Como funciona</div>
+      <div class="pstep" style="margin-bottom:8px"><div class="pstep-num">1</div><div class="pstep-text">Clique em <strong>"Copiar prompt e abrir IA"</strong>. Para <strong>ChatGPT</strong> e <strong>Gemini</strong>, o chat já abre preenchido. Para o <strong>Claude</strong>, o chat abre em branco — cole com <strong>Ctrl+V</strong>.</div></div>
+      <div class="pstep" style="margin-bottom:8px"><div class="pstep-num">2</div><div class="pstep-text">Na IA aberta, cole com <strong>Ctrl+V</strong> (ou Cmd+V no Mac) e pressione Enter. Aguarde a resposta completa.</div></div>
+      <div class="pstep"><div class="pstep-num">3</div><div class="pstep-text">Copie todo o texto gerado e cole no campo <strong>"Colar e formatar"</strong> abaixo para montar o checklist final.</div></div>
+    </div>
+    <div style="margin-bottom:22px">
+      <button class="btn btn-primary btn-lg" id="btn-copiar-abrir" onclick="copiarAbrirIA()" style="width:100%;justify-content:center;font-size:15px;padding:15px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copiar prompt e abrir IA</button>
+      <div style="text-align:center;font-size:11.5px;color:var(--muted-light);margin-top:8px" id="ai-sel-hint">Selecione uma IA acima para continuar</div>
+    </div>
+    <div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Prompt gerado</div>
+        <button onclick="copiarAbrirIA()" style="display:inline-flex;align-items:center;gap:4px;padding:5px 11px;background:var(--blue);color:#fff;border:none;border-radius:4px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copiar e abrir</button>
+      </div>
+      <pre id="prompt-box"></pre>
+    </div>
+    <div class="card" style="border-color:var(--green);background:var(--green-bg)">
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="width:34px;height:34px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div style="flex:1">
+          <div style="font-size:13.5px;font-weight:700;color:var(--green);margin-bottom:4px">Cole o checklist gerado pela IA aqui</div>
+          <div style="font-size:12.5px;color:#1a5c3a;margin-bottom:11px;line-height:1.55">A ferramenta formata com layout profissional, caixas de verificação e opções de download.</div>
+          <textarea id="checklist-paste" rows="5" placeholder="Cole aqui o texto gerado pela IA…" style="background:#fff;border-color:#a8d8be"></textarea>
+          <div style="margin-top:9px;display:flex;justify-content:flex-end"><button class="btn btn-green" onclick="formatarChecklist()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Colar e formatar</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="section-result" style="display:none">
+    <div class="result-actions-bar" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div><div style="font-size:17px;font-weight:800;color:var(--text)">Checklist técnico de edital</div><div style="font-size:12.5px;color:var(--muted);margin-top:2px" id="result-sub"></div></div>
+      <button class="btn btn-ghost" onclick="voltarPrompt()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Voltar</button>
+    </div>
+    <div id="editor-wrap">
+      <div class="editor-toolbar">
+        <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px">Editar:</span>
+        <button class="tb-btn" onclick="fmt('bold')" title="Negrito"><b>N</b></button>
+        <button class="tb-btn" onclick="fmt('italic')" title="Itálico"><i>I</i></button>
+        <button class="tb-btn" onclick="fmt('underline')" title="Sublinhado"><u>S</u></button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmtBlock('h2')" title="Título de seção">H2</button>
+        <button class="tb-btn" onclick="fmtBlock('h3')" title="Subtítulo">H3</button>
+        <button class="tb-btn" onclick="fmtBlock('p')" title="Parágrafo">¶</button>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" onclick="fmt('insertUnorderedList')" title="Lista">≡</button>
+        <button class="tb-btn" onclick="document.execCommand('undo')" title="Desfazer">↩</button>
+        <button class="tb-btn" onclick="document.execCommand('redo')" title="Refazer">↪</button>
+      </div>
+      <div class="result-doc" id="doc-content" contenteditable="true" spellcheck="true"></div>
+    </div>
+    <div id="acoes-pos-doc" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:18px;margin-bottom:10px">
+      <button class="btn btn-outline" onclick="removerTodasOrientacoes()" style="gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg> Remover orientações</button>
+      <span style="font-size:11.5px;color:var(--muted-light)">As orientações em laranja são lembretes — remova-as ao finalizar</span>
+    </div>
+    <div class="dl-bar">
+      <span class="dl-label">Download:</span>
+      <button class="btn-dl" id="btn-dl-save" onclick="salvarHTML()" style="background:rgba(27,140,90,.35);border-color:rgba(27,140,90,.6)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Salvar (.html)</button>
+      <button class="btn-dl" onclick="window.print()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> PDF / Imprimir</button>
+      <span style="color:rgba(255,255,255,.45);font-size:11px;margin-left:auto">Para PDF: use "Imprimir → Salvar como PDF" no navegador</span>
+    </div>
+    <div class="cta-box">
+      <div><h3>Quer ir além da análise do edital? Conheça a OrçaFascio!</h3><p>Líder em gestão de obras no Brasil, a OrçaFascio reúne ferramentas para orçamento, medição, planejamento, BIM e muito mais. Teste grátis por 7 dias (sem cartão!).</p></div>
+      <div class="cta-row">
+        <img src="https://cdn.prod.website-files.com/651ad45748430e2eec5b8130/66b51e10cc0085a0a56ad204_logo%20or%C3%A7afascio.svg" alt="OrçaFascio" style="height:22px;opacity:.65;filter:brightness(0) invert(1);flex-shrink:0" onerror="this.style.display='none'">
+        <a href="https://app.orcafascio.com/usuarios/new/?utm_source=ferramenta-checklist-edital&utm_medium=ferramenta-gratuita&utm_campaign=leadgen" target="_blank" class="btn btn-white">Quero experimentar!</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px"><button class="btn btn-ghost" onclick="resetForm()" style="font-size:12.5px;color:var(--muted-light)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.63"/></svg> Novo checklist</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
